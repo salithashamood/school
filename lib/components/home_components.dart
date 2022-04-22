@@ -28,19 +28,23 @@ appBarLeading() {
 appBarShape() {
   return const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(
-      bottom: Radius.circular(20),
+      bottom: Radius.circular(30),
     ),
   );
 }
 
-appBarPreferredSize(TextEditingController searchController) {
+appBarPreferredSize(TextEditingController searchController,
+    VoidCallback clickSearch, bool isClickButton) {
   return PreferredSize(
     preferredSize: Size.fromHeight(5.h),
-    child: appBarsecondTitle(),
+    child: isClickButton
+        ? appBarSearchBar(searchController, clickSearch)
+        : appBarsecondTitle(clickSearch),
   );
 }
 
-appBarSearchBar(TextEditingController searchController) {
+appBarSearchBar(
+    TextEditingController searchController, VoidCallback clickSearch) {
   return Container(
     width: 98.w,
     height: 7.h,
@@ -55,7 +59,7 @@ appBarSearchBar(TextEditingController searchController) {
           fillColor: Colors.white,
           filled: true,
           suffixIcon: IconButton(
-            onPressed: () {},
+            onPressed: clickSearch,
             icon: Icon(
               Icons.search,
               color: primaryColor,
@@ -77,7 +81,7 @@ appBarSearchBar(TextEditingController searchController) {
   );
 }
 
-appBarsecondTitle() {
+appBarsecondTitle(VoidCallback clickSearch) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,7 +99,7 @@ appBarsecondTitle() {
       Padding(
         padding: EdgeInsets.only(left: 10.w, bottom: 2.h, right: 5.w, top: 2.h),
         child: IconButton(
-          onPressed: () {},
+          onPressed: clickSearch,
           icon: Image.asset('assets/images/search_icon.png'),
         ),
       ),
