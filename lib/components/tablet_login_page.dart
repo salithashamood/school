@@ -17,10 +17,9 @@ class _TabletLoginPageState extends State<TabletLoginPage> {
   bool isVisiblePassword = false;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        loginPageImage('assets/images/tablet_login_bg.png', size, true),
+        loginPageImage('assets/images/tablet_login_bg.png', true),
         const SizedBox(
           height: 100,
         ),

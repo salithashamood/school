@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 import '../controllers/login_controller.dart';
 
-loginPageImage(String path, Size size, bool isTablet) {
+loginPageImage(String path,bool isTablet) {
   return Container(
-    width: size.width,
+    width: 100.w,
     // height: size.height * 0.45,
+    height: 55.h,
     child: Image.asset(
       path,
-      fit: BoxFit.cover,
+      fit: SizerUtil.deviceType == DeviceType.mobile
+          ? BoxFit.fill
+          : BoxFit.cover,
     ),
     decoration: isTablet
         ? BoxDecoration(

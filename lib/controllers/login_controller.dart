@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:school/utils/user_secure_storage.dart';
 
 import '../screens/home_page.dart';
 
@@ -10,7 +11,6 @@ class LoginController extends GetxController {
   var password = TextEditingController().obs;
   var isLoading = false.obs;
   final formkey = GlobalKey<FormState>().obs;
-
 
   Future<void> logIn() async {
     isLoading.value = true;
@@ -33,6 +33,9 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         isLoading.value = false;
+        final body = jsonDecode(response.body);
+        await UserSecureStorage.setJwtToken(body['jwtToken']);
+        await UserSecureStorage.setRefreshToken(body['refreshToken']);
         Get.off(const HomePage());
       } else {
         isLoading.value = false;
@@ -44,13 +47,14 @@ class LoginController extends GetxController {
         );
       }
     } catch (e) {
+      print(e.toString());
       isLoading.value = false;
       Get.snackbar(
-          'Error',
-          e.toString(),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        'Error',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 }

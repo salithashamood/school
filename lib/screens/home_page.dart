@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:school/components/home_components.dart';
+import 'package:school/utils/user_secure_storage.dart';
+import 'package:sizer/sizer.dart';
 
 import '../utils/colors.dart';
 
@@ -11,25 +14,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // init();
+  }
+
+  init() async {
+    final jwt = await UserSecureStorage.getJwtToken();
+    print(jwt);
+    await UserSecureStorage.deleteAll();
+  }
+
+  final searchController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    // return const Scaffold(
-    //   body: Center(
-    //     child: Text('Home Page'),
-    //   ),
-    // );
     return Scaffold(
       appBar: AppBar(
-        // flexibleSpace: Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //   children: [Text('Waste Management'), Icon(Icons.search),],
-        // ),
+        shape: appBarShape(),
+        toolbarHeight: 15.h,
+        bottom: appBarPreferredSize(searchController),
         backgroundColor: primaryColor,
         centerTitle: true,
-        title: const Text('Hotel Bentota'),
+        title: appBarTitle('Hotel Bentota'),
         actions: [
-          Image.asset('assets/images/filter_icon.png'),
+          appBarActionButton(),
         ],
-        leading: Image.asset('assets/images/hamburger_icon.png'),
+        leading: appBarLeading(),
       ),
     );
   }

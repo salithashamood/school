@@ -17,13 +17,12 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
   bool isVisiblePassword = false;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        loginPageImage('assets/images/phone_login_bg.png', size, false),
+        loginPageImage('assets/images/phone_login_bg.png', false),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
         Container(
           padding: const EdgeInsets.only(top: 0, right: 18, left: 18),
