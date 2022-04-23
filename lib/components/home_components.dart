@@ -106,3 +106,56 @@ appBarsecondTitle(VoidCallback clickSearch) {
     ],
   );
 }
+
+appBarTab(String text) {
+  return Tab(
+    child: Text(
+      text,
+      style: TextStyle(fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+appBarTabView(String text) {
+  return ListView.builder(
+    itemCount: 20,
+    itemBuilder: (contex, index) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 25, left: 8, right: 8),
+        child: SizedBox(
+          height: 90,
+          child: Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: ListTile(
+              trailing: IconButton(
+                onPressed: () {},
+                icon: Image.asset('assets/images/arrow_right.png',
+                    color: Colors.black),
+              ),
+              title: tabBarViewColumn(text),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+tabBarViewColumn(String text) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'Jul 07.2021',
+        style: TextStyle(fontWeight: FontWeight.w200, color: Colors.grey),
+      ),
+      Text(text,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+          )),
+    ],
+  );
+}

@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    _tabController = new TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
     // init();
   }
@@ -58,36 +58,44 @@ class _HomePageState extends State<HomePage>
       body: Stack(
         children: [
           Container(
-            height: 500,
-            color: Colors.white,
+            margin: const EdgeInsets.only(top: 45),
+            child: TabBarView(
+              children: [
+                appBarTabView('Two story buildings'),
+                appBarTabView('Aliquam tincidunt mauris eu risus'),
+                appBarTabView('Vestibulum auctor dapibus neque'),
+                appBarTabView('Nunc dignissim risus id metus'),
+              ],
+              controller: _tabController,
+            ),
           ),
           Positioned(
             // left: 25,
             top: 0,
-            child: Container(
+            child: SizedBox(
               width: 100.w,
               child: Card(
-                elevation: 20,
+                elevation: 1,
                 child: DefaultTabController(
                   length: 4,
                   initialIndex: 0,
                   animationDuration: const Duration(milliseconds: 500),
                   child: TabBar(
-                    padding: EdgeInsets.only(left: 25, right: 15),
+                    padding: EdgeInsets.only(left: 15, right: 15),
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorWeight: 3,
                     controller: _tabController,
                     labelPadding: const EdgeInsets.only(
-                        top: 5, left: 10, right: 15, bottom: 10),
+                        top: 0, left: 10, right: 15, bottom: 10),
                     indicatorColor: Colors.blue,
                     labelColor: Colors.blue,
                     unselectedLabelColor: Colors.grey,
                     isScrollable: true,
                     tabs: [
-                      Text('datadsdsfdf'),
-                      Text('datadsdsdsd'),
-                      Text('datasdwwedsd'),
-                      Text('datawwdsfdfe'),
+                      appBarTab('Building Type'),
+                      appBarTab('Building'),
+                      appBarTab('Functional Areas'),
+                      appBarTab('Functional'),
                     ],
                   ),
                 ),
