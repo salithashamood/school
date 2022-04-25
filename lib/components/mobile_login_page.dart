@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school/components/widget_components.dart';
+import 'package:school/utils/image.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -20,7 +21,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        loginPageImage('assets/images/phone_login_bg.png', false),
+        loginPageImage(mobileLoginBg, false),
         const SizedBox(
           height: 20,
         ),

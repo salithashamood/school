@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school/components/widget_components.dart';
+import 'package:school/utils/image.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -19,7 +20,7 @@ class _TabletLoginPageState extends State<TabletLoginPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        loginPageImage('assets/images/tablet_login_bg.png', true),
+        loginPageImage(tabletLoginBg, true),
         const SizedBox(
           height: 100,
         ),

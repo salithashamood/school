@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school/utils/image.dart';
 import 'package:sizer/sizer.dart';
 
 import '../utils/colors.dart';
@@ -14,14 +15,14 @@ appBarTitle(String title) {
 appBarActionButton() {
   return IconButton(
     onPressed: () {},
-    icon: Image.asset('assets/images/filter_icon.png'),
+    icon: Image.asset(drawerImage),
   );
 }
 
-appBarLeading() {
+appBarLeading(VoidCallback onPressed) {
   return IconButton(
-    onPressed: () {},
-    icon: Image.asset('assets/images/hamburger_icon.png'),
+    onPressed: onPressed,
+    icon: Image.asset(filterImage),
   );
 }
 
@@ -34,12 +35,12 @@ appBarShape() {
 }
 
 appBarPreferredSize(TextEditingController searchController,
-    VoidCallback clickSearch, bool isClickButton) {
+    VoidCallback clickSearch, bool isClickButton, String text) {
   return PreferredSize(
     preferredSize: Size.fromHeight(5.h),
     child: isClickButton
         ? appBarSearchBar(searchController, clickSearch)
-        : appBarsecondTitle(clickSearch),
+        : appBarsecondTitle(clickSearch, text),
   );
 }
 
@@ -81,7 +82,7 @@ appBarSearchBar(
   );
 }
 
-appBarsecondTitle(VoidCallback clickSearch) {
+appBarsecondTitle(VoidCallback clickSearch, String text) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,7 +90,7 @@ appBarsecondTitle(VoidCallback clickSearch) {
       Padding(
         padding: EdgeInsets.only(left: 5.w, bottom: 2.h, right: 10.w, top: 2.h),
         child: Text(
-          'Waste Management',
+          text,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.sp,
@@ -100,7 +101,7 @@ appBarsecondTitle(VoidCallback clickSearch) {
         padding: EdgeInsets.only(left: 10.w, bottom: 2.h, right: 5.w, top: 2.h),
         child: IconButton(
           onPressed: clickSearch,
-          icon: Image.asset('assets/images/search_icon.png'),
+          icon: Image.asset(searchImage),
         ),
       ),
     ],
@@ -111,7 +112,7 @@ appBarTab(String text) {
   return Tab(
     child: Text(
       text,
-      style: TextStyle(fontWeight: FontWeight.bold),
+      style: const TextStyle(fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -127,13 +128,12 @@ appBarTabView(String text) {
           child: Card(
             elevation: 3,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: ListTile(
               trailing: IconButton(
                 onPressed: () {},
-                icon: Image.asset('assets/images/arrow_right.png',
-                    color: Colors.black),
+                icon: Image.asset(arrowRight, color: Colors.black),
               ),
               title: tabBarViewColumn(text),
             ),

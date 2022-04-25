@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:school/binding.dart';
 import 'package:school/screens/home_page.dart';
+import 'package:school/screens/main_home_screen.dart';
 import 'package:school/utils/user_secure_storage.dart';
 import 'package:sizer/sizer.dart';
 
@@ -43,14 +44,17 @@ class SetScreen extends StatefulWidget {
 
 class _SetScreenState extends State<SetScreen> {
   bool isLogin = false;
+  bool isLoading = true;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     init();
   }
 
   init() async {
+    setState(() {
+      isLoading = true;
+    });
     final jwtToken = await UserSecureStorage.getJwtToken();
     if (jwtToken == null) {
       setState(() {
@@ -61,10 +65,19 @@ class _SetScreenState extends State<SetScreen> {
         isLogin = true;
       });
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLogin ? HomePage() : LoginPage();
+    return isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : isLogin
+            ? MainHomeScreen()
+            : LoginPage();
   }
 }

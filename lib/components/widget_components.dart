@@ -4,10 +4,9 @@ import 'package:sizer/sizer.dart';
 
 import '../controllers/login_controller.dart';
 
-loginPageImage(String path,bool isTablet) {
+loginPageImage(String path, bool isTablet) {
   return Container(
     width: 100.w,
-    // height: size.height * 0.45,
     height: 55.h,
     child: Image.asset(
       path,

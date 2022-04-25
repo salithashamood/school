@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:school/components/appbar_tab_component.dart';
+import 'package:school/components/drawer_component.dart';
 import 'package:school/components/home_components.dart';
+import 'package:school/utils/image.dart';
 import 'package:school/utils/user_secure_storage.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   bool isClickButton = false;
+  bool isClickDrawerButton = false;
   TabController? _tabController;
 
   @override
@@ -24,13 +29,20 @@ class _HomePageState extends State<HomePage>
     // init();
   }
 
+  @override
+  void dispose() {
+    _tabController!.dispose();
+    super.dispose();
+  }
+
   init() async {
-    final jwt = await UserSecureStorage.getJwtToken();
-    print(jwt);
+    // final jwt = await UserSecureStorage.getJwtToken();
+    // print(jwt);
     await UserSecureStorage.deleteAll();
   }
 
   final searchController = TextEditingController();
+  GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
 
   clickSearchButton() {
     setState(() {
@@ -40,20 +52,28 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    clickDrawer() {
+      // setState(() {
+      //   isClickButton = !isClickButton;
+      // });
+      scaffoldkey.currentState!.openDrawer();
+    }
+
     return Scaffold(
+      key: scaffoldkey,
       appBar: AppBar(
         elevation: 0,
         shape: appBarShape(),
         toolbarHeight: 17.h,
         bottom: appBarPreferredSize(
-            searchController, clickSearchButton, isClickButton),
+            searchController, clickSearchButton, isClickButton, 'Waste Management'),
         backgroundColor: primaryColor,
         centerTitle: true,
         title: appBarTitle('Hotel Bentota'),
         actions: [
           appBarActionButton(),
         ],
-        leading: appBarLeading(),
+        leading: appBarLeading(clickDrawer),
       ),
       body: Stack(
         children: [
@@ -69,41 +89,10 @@ class _HomePageState extends State<HomePage>
               controller: _tabController,
             ),
           ),
-          Positioned(
-            // left: 25,
-            top: 0,
-            child: SizedBox(
-              width: 100.w,
-              child: Card(
-                elevation: 1,
-                child: DefaultTabController(
-                  length: 4,
-                  initialIndex: 0,
-                  animationDuration: const Duration(milliseconds: 500),
-                  child: TabBar(
-                    padding: EdgeInsets.only(left: 15, right: 15),
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorWeight: 3,
-                    controller: _tabController,
-                    labelPadding: const EdgeInsets.only(
-                        top: 0, left: 10, right: 15, bottom: 10),
-                    indicatorColor: Colors.blue,
-                    labelColor: Colors.blue,
-                    unselectedLabelColor: Colors.grey,
-                    isScrollable: true,
-                    tabs: [
-                      appBarTab('Building Type'),
-                      appBarTab('Building'),
-                      appBarTab('Functional Areas'),
-                      appBarTab('Functional'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+          AppBarTab(tabController: _tabController!),
         ],
       ),
+      drawer: const DrawerComponent(),
     );
   }
 }
