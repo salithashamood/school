@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school/components/appbar_component.dart';
 import 'package:school/components/help_main_components.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,21 +25,11 @@ class _HelpMainScreenState extends State<HelpMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        shape: appBarShape(),
-        toolbarHeight: 10.h,
-        bottom: appBarPreferredSize(
-          searchController,
-          clickSearchButton,
-          isClickButton,
-          'Help',
-        ),
-        backgroundColor: primaryColor,
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_back),
-        ),
+      appBar: AppBarComponent(
+        isHaveTitle: false,
+        isHomePage: false,
+        secondTitle: 'Help',
+        toolBarHeight: 13.h,
       ),
       body: helpList(),
     );

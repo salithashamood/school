@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school/components/appbar_component.dart';
 import 'package:school/components/chat_main_components.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,17 +25,11 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        shape: appBarShape(),
-        toolbarHeight: 10.h,
-        bottom: appBarPreferredSize(
-            searchController, clickSearchButton, isClickButton, 'Chat'),
-        backgroundColor: primaryColor,
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_back),
-        ),
+      appBar: AppBarComponent(
+        toolBarHeight: 13.h,
+        secondTitle: 'Chat',
+        isHaveTitle: false,
+        isHomePage: false,
       ),
       body: chatTile(),
     );

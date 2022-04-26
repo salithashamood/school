@@ -3,6 +3,7 @@ import 'package:school/components/botom_navigation_bar_component.dart';
 import 'package:school/screens/chat_main_screen.dart';
 import 'package:school/screens/help_main_screen.dart';
 import 'package:school/screens/home_page.dart';
+import 'package:school/screens/report_main_screen.dart';
 import 'package:school/utils/image.dart';
 
 class MainHomeScreen extends StatefulWidget {
@@ -18,11 +19,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     ChatMainScreen(),
-    Center(
-      child: Text(
-        'Report',
-      ),
-    ),
+    ReportMainScreen(),
     HelpMainScreen(),
   ];
 

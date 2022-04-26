@@ -28,7 +28,7 @@ helpList() {
 
   return Container(
     height: 100.h,
-    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
     child: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +38,7 @@ helpList() {
             children: [
               Text(
                 help['title'],
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 22,
                 ),

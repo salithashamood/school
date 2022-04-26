@@ -29,7 +29,7 @@ appBarLeading(VoidCallback onPressed) {
 appBarShape() {
   return const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(
-      bottom: Radius.circular(30),
+      bottom: Radius.circular(25),
     ),
   );
 }
@@ -88,7 +88,7 @@ appBarsecondTitle(VoidCallback clickSearch, String text) {
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Padding(
-        padding: EdgeInsets.only(left: 5.w, bottom: 2.h, right: 10.w, top: 2.h),
+        padding: EdgeInsets.only(left: 5.w, bottom: 1.h, right: 10.w, top: 0),
         child: Text(
           text,
           style: TextStyle(
@@ -98,9 +98,10 @@ appBarsecondTitle(VoidCallback clickSearch, String text) {
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(left: 10.w, bottom: 2.h, right: 5.w, top: 2.h),
+        padding: EdgeInsets.only(left: 10.w, bottom: 1.h, right: 1.w, top: 0),
         child: IconButton(
           onPressed: clickSearch,
+          iconSize: 35,
           icon: Image.asset(searchImage),
         ),
       ),
@@ -122,7 +123,7 @@ appBarTabView(String text) {
     itemCount: 20,
     itemBuilder: (contex, index) {
       return Padding(
-        padding: const EdgeInsets.only(top: 25, left: 8, right: 8),
+        padding: const EdgeInsets.only(top: 5, left: 8, right: 8),
         child: SizedBox(
           height: 90,
           child: Card(

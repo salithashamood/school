@@ -28,8 +28,8 @@ class _AppBarTabState extends State<AppBarTab> {
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 3,
               controller: widget.tabController,
-              labelPadding: const EdgeInsets.only(
-                  top: 0, left: 10, right: 15, bottom: 10),
+              labelPadding:
+                  const EdgeInsets.only(top: 0, left: 10, right: 15, bottom: 0),
               indicatorColor: Colors.blue,
               labelColor: Colors.blue,
               unselectedLabelColor: Colors.grey,

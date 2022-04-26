@@ -23,7 +23,12 @@ String myAccountIcon = 'assets/images/my_account_icon.png';
 String separatorIcon = 'assets/images/separator_icon.png';
 String organisationIcon = 'assets/images/organisation_icon.png';
 String dropDownIcon = 'assets/images/dropdown_icon.png';
+String arrowDownIcon = 'assets/images/arrow_down.png';
 String logOutIcon = 'assets/images/logout_icon.png';
 String preLoadIcon = 'assets/images/pre_load_icon.png';
 String notificationIcon = 'assets/images/notification_icon.png';
 String contactUsIcon = 'assets/images/contact_us.png';
+
+
+
+String cameraIcon = 'assets/images/camera_icon.png';

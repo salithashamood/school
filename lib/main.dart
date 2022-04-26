@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:school/binding.dart';
+import 'package:school/screens/camera_view_screen.dart';
 import 'package:school/screens/home_page.dart';
 import 'package:school/screens/main_home_screen.dart';
 import 'package:school/utils/user_secure_storage.dart';
@@ -8,7 +10,9 @@ import 'package:sizer/sizer.dart';
 
 import 'screens/login_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
 
@@ -73,8 +77,10 @@ class _SetScreenState extends State<SetScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
+        ? const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
           )
         : isLogin
             ? MainHomeScreen()

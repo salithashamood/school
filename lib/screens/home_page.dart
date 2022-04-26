@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school/components/appbar_component.dart';
 import 'package:school/components/appbar_tab_component.dart';
 import 'package:school/components/drawer_component.dart';
 import 'package:school/components/home_components.dart';
@@ -18,8 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  bool isClickButton = false;
-  bool isClickDrawerButton = false;
+  // bool isClickDrawerButton = false;
   TabController? _tabController;
 
   @override
@@ -44,41 +44,21 @@ class _HomePageState extends State<HomePage>
   final searchController = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
 
-  clickSearchButton() {
-    setState(() {
-      isClickButton = !isClickButton;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    clickDrawer() {
-      // setState(() {
-      //   isClickButton = !isClickButton;
-      // });
-      scaffoldkey.currentState!.openDrawer();
-    }
-
     return Scaffold(
       key: scaffoldkey,
-      appBar: AppBar(
-        elevation: 0,
-        shape: appBarShape(),
-        toolbarHeight: 17.h,
-        bottom: appBarPreferredSize(
-            searchController, clickSearchButton, isClickButton, 'Waste Management'),
-        backgroundColor: primaryColor,
-        centerTitle: true,
-        title: appBarTitle('Hotel Bentota'),
-        actions: [
-          appBarActionButton(),
-        ],
-        leading: appBarLeading(clickDrawer),
-      ),
+      appBar: AppBarComponent(
+          scaffoldkey: scaffoldkey,
+          title: 'Hotel Bentota',
+          toolBarHeight: 17.h,
+          secondTitle: 'Waste Management',
+          isHaveTitle: true,
+          isHomePage: true),
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 45),
+            margin: const EdgeInsets.only(top: 55),
             child: TabBarView(
               children: [
                 appBarTabView('Two story buildings'),
