@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school/components/botom_navigation_bar_component.dart';
 import 'package:school/screens/chat_main_screen.dart';
+import 'package:school/screens/help_main_screen.dart';
 import 'package:school/screens/home_page.dart';
 import 'package:school/utils/image.dart';
 
@@ -22,11 +23,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
         'Report',
       ),
     ),
-    Center(
-      child: Text(
-        'Help',
-      ),
-    ),
+    HelpMainScreen(),
   ];
 
   void _onItemTapped(int index) {

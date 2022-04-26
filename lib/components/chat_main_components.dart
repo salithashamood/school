@@ -152,7 +152,10 @@ chatTile() {
                               child: Text(
                                 user['name'],
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
+                                    fontWeight: user['isRead']
+                                        ? FontWeight.w500
+                                        : FontWeight.bold,
+                                    fontSize: 18),
                               ),
                             ),
                             SizedBox(
@@ -173,8 +176,7 @@ chatTile() {
                           maxLines: 2,
                           style: TextStyle(
                               fontSize: 15,
-                              color:
-                                  user['isRead'] ? Colors.black : Colors.blue,
+                              color: user['isRead'] ? Colors.grey : Colors.blue,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
