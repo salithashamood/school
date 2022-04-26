@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school/components/botom_navigation_bar_component.dart';
 import 'package:school/screens/chat_main_screen.dart';
 import 'package:school/screens/home_page.dart';
+import 'package:school/utils/image.dart';
 
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({Key? key}) : super(key: key);
@@ -42,8 +43,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
         selectedIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-
-      // BottomNavigationBar(
+      // bottomNavigationBar: BottomNavigationBar(
       //   showSelectedLabels: false,
       //   showUnselectedLabels: false,
       //   currentIndex: _selectedIndex,
