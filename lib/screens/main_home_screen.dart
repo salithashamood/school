@@ -19,7 +19,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     ChatMainScreen(),
-    ReportMainScreen(),
+    ReportMainScreen(selectedImages: []),
     HelpMainScreen(),
   ];
 
@@ -37,45 +37,6 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
         selectedIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   showSelectedLabels: false,
-      //   showUnselectedLabels: false,
-      //   currentIndex: _selectedIndex,
-      //   elevation: 25,
-      //   type: BottomNavigationBarType.fixed,
-      //   onTap: _onItemTapped,
-      //   // fixedColor: Colors.red,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(
-      //           _selectedIndex == 0 ? activeHomeIcon : normalHomeIcon,
-      //         ),
-      //       ),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(_selectedIndex == 1 ? activeChatIcon : normalChatIcon),
-      //       ),
-      //       label: 'Chat',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(
-      //             _selectedIndex == 2 ? activeReportIcon : normalReportIcon),
-      //       ),
-      //       label: 'Report',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: ImageIcon(
-      //         AssetImage(_selectedIndex == 3 ? activeHelpIcon : normalHelpIcon),
-      //         // color: Colors.pink,
-      //       ),
-      //       label: 'Help',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
