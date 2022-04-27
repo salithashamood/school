@@ -18,16 +18,22 @@ class CameraViewScreen extends StatefulWidget {
 class _CameraViewScreenState extends State<CameraViewScreen> {
   CameraController? _cameraController;
   Future<void>? _cameraValue;
-  List<Album> images = [];
+  List<Medium> imagesMedia = [];
 
   Future getImage() async {
-    final List<Album> imageAlbums = await PhotoGallery.listAlbums(
-      mediumType: MediumType.image,
-    );
-    setState(() {
-      images = imageAlbums;
-    });
-    print('images: $imageAlbums');
+    try {
+      final List<Album> imagesAlbum =
+          await PhotoGallery.listAlbums(mediumType: MediumType.image);
+      imagesAlbum.forEach((element) async {
+        final MediaPage mediaPage = await element.listMedia(newest: false);
+        setState(() {
+          imagesMedia = mediaPage.items;
+        });
+      });
+      print('images: $imagesMedia');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<bool> _promptPermissionSetting() async {
@@ -47,6 +53,12 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
     _cameraController = CameraController(cameras![0], ResolutionPreset.high);
     _cameraValue = _cameraController!.initialize();
     _promptPermissionSetting();
+  }
+
+  @override
+  void dispose() {
+    _cameraController!.dispose();
+    super.dispose();
   }
 
   @override
@@ -81,93 +93,95 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: images.map((image) {
-                        print(images.length);
-                        if (images.isEmpty || images.length == 1) {
-                          return Container();
-                        } else {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 3),
-                            height: 10.h,
-                            width: 10.h,
-                            // color: Colors.red,
-                            child: FadeInImage(
-                              fit: BoxFit.cover,
-                              placeholder: MemoryImage(kTransparentImage),
-                              image: AlbumThumbnailProvider(
-                                albumId: image.id,
-                                mediumType: image.mediumType,
+                      child: ListView(
+                        reverse: true,
+                        scrollDirection: Axis.horizontal,
+                        children: imagesMedia.map((image) {
+                          print(imagesMedia.length);
+                          if (imagesMedia.isEmpty) {
+                            return Container();
+                          } else {
+                            return Container(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 4,
+                                horizontal: 3,
                               ),
-                            ),
-                          );
-                        }
-                      }).toList(),
-                      //     [
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     color: Colors.red,
-                      //     child: Text('data'),
-                      //   ),
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     // color: Colors.red,
-                      //     child: images.isEmpty
-                      //         ? Text('data')
-                      //         : FadeInImage(
-                      //             fit: BoxFit.cover,
-                      //             placeholder: MemoryImage(kTransparentImage),
-                      //             image: AlbumThumbnailProvider(
-                      //               albumId: images[0].id,
-                      //               mediumType: images[0].mediumType,
-                      //             ),
-                      //           ),
-                      //   ),
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     color: Colors.red,
-                      //   ),
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     color: Colors.red,
-                      //   ),
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     color: Colors.red,
-                      //   ),
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     color: Colors.red,
-                      //   ),
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //         vertical: 4, horizontal: 3),
-                      //     height: 10.h,
-                      //     width: 10.h,
-                      //     color: Colors.red,
-                      //   ),
-                      // ],
-                    )),
+                              height: 10.h,
+                              width: 10.h,
+                              // color: Colors.red,
+                              child: FadeInImage(
+                                  fit: BoxFit.cover,
+                                  placeholder: MemoryImage(kTransparentImage),
+                                  image: ThumbnailProvider(
+                                    mediumId: image.id,
+                                    mediumType: image.mediumType,
+                                  )),
+                            );
+                          }
+                        }).toList(),
+
+                        //     [
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     color: Colors.red,
+                        //     child: Text('data'),
+                        //   ),
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     // color: Colors.red,
+                        //     // child: FadeInImage(
+                        //     //         fit: BoxFit.cover,
+                        //     //         placeholder: MemoryImage(kTransparentImage),
+                        //     //         image: PhotoProvider(
+                        //     //           mediumId: imagesMedia!.id,
+                        //     //           mimeType: imagesMedia!.mimeType,
+                        //     //         ),
+                        //     //       ),
+                        //   ),
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     color: Colors.red,
+                        //   ),
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     color: Colors.red,
+                        //   ),
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     color: Colors.red,
+                        //   ),
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     color: Colors.red,
+                        //   ),
+                        //   Container(
+                        //     margin: const EdgeInsets.symmetric(
+                        //         vertical: 4, horizontal: 3),
+                        //     height: 10.h,
+                        //     width: 10.h,
+                        //     color: Colors.red,
+                        //   ),
+                        // ],
+                      ),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -183,7 +197,9 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _cameraController!.takePicture();
+                          },
                           icon: Icon(
                             Icons.camera_alt_outlined,
                             size: 30,

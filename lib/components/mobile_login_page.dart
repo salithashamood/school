@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school/components/widget_components.dart';
 import 'package:school/utils/image.dart';
+import 'package:sizer/sizer.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -116,16 +117,16 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         color: Colors.transparent,
-                        width: 350,
+                        width: 100.w,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             forgotPasswordButton(),
                             // ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            loginButton(60),
+                            // SizedBox(
+                            //   width: 1.w,
+                            // ),
+                            loginButton(14.w),
                           ],
                         ),
                       ),

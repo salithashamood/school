@@ -81,7 +81,7 @@ class _DrawerComponentState extends State<DrawerComponent> {
                                 color: Colors.blue),
                           ),
                           SizedBox(
-                            width: 13.w,
+                            width: 15.w,
                           ),
                           Switch(
                             value: isSwitched,

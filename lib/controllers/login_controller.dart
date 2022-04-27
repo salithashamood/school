@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:school/screens/main_home_screen.dart';
 import 'package:school/utils/user_secure_storage.dart';
 
 import '../screens/home_page.dart';
@@ -36,7 +37,7 @@ class LoginController extends GetxController {
         final body = jsonDecode(response.body);
         await UserSecureStorage.setJwtToken(body['jwtToken']);
         await UserSecureStorage.setRefreshToken(body['refreshToken']);
-        Get.off(const HomePage());
+        Get.off(const MainHomeScreen());
       } else {
         isLoading.value = false;
         Get.snackbar(

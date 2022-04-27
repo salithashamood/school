@@ -101,7 +101,7 @@ accountDetails(String fName, String lName) {
                       height: 1.h,
                     ),
                     Container(
-                      width: 32.w,
+                      width: 35.w,
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
