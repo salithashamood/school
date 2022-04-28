@@ -65,3 +65,9 @@ String rpAvarageSelectedIcon = 'assets/images/rp_avarage_selected_icon.png';
 
 String moreIcon = 'assets/images/more_icon.png';
 
+String plusIcon = 'assets/images/quantity_plus_icon.png';
+String minusIcon = 'assets/images/quantity_minus_icon.png';
+String forwardIcon = 'assets/images/forward_icon.png';
+String backwardIcon = 'assets/images/backward_icon.png';
+
+

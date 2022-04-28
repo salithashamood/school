@@ -32,8 +32,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'segoeui',
             primarySwatch: Colors.blue,
           ),
-          // home: const SetScreen(),
-          home: ViewCardScreen(),
+          home: const SetScreen(),
         );
       },
     );

@@ -25,26 +25,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
           width: 6.h,
           child: Stack(
             children: [
-              IconButton(
-                onPressed: () async {
-                  bool isPermissioned = await promptPermissionSetting();
-                  if (isPermissioned) {
-                    Get.to(CameraViewScreen());
-                  } else {
-                    Get.snackbar('Not Permission', 'Give Permisson');
-                  }
-                },
-                icon: Image.asset(
-                  cameraIcon,
-                ),
-              ),
-              widget.selectedImages!.isEmpty
-                  ? Container()
-                  : Positioned(
-                      child: Text(widget.selectedImages!.length.toString()),
-                      top: 5,
-                      right: 5,
-                    ),
             ],
           ),
         ),

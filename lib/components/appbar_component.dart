@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:school/components/home_components.dart';
 
 import '../utils/colors.dart';
@@ -45,7 +46,8 @@ class _AppBarComponentState extends State<AppBarComponent> {
     }
 
     return AppBar(
-      elevation: 0,
+      shadowColor: greyColor,
+      elevation: 5,
       shape: appBarShape(),
       toolbarHeight: widget.toolBarHeight,
       bottom: appBarPreferredSize(searchController, clickSearchButton,
@@ -59,7 +61,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
       leading: widget.isHomePage
           ? appBarLeading(clickDrawer)
           : IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.back();
+              },
               icon: Icon(Icons.arrow_back),
             ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:school/screens/view_card_screen.dart';
 import 'package:school/utils/image.dart';
 import 'package:sizer/sizer.dart';
 
@@ -146,17 +148,22 @@ appBarTabView(String text) {
 }
 
 tabBarViewColumn(String text) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        'Jul 07.2021',
-        style: TextStyle(fontWeight: FontWeight.w200, color: Colors.grey),
-      ),
-      Text(text,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-          )),
-    ],
+  return InkWell(
+    onTap: () {
+      Get.to(ViewCardScreen());
+    },
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Jul 07.2021',
+          style: TextStyle(fontWeight: FontWeight.w200, color: Colors.grey),
+        ),
+        Text(text,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),),
+      ],
+    ),
   );
 }

@@ -11,7 +11,8 @@ import 'package:transparent_image/transparent_image.dart';
 List<CameraDescription>? cameras;
 
 class CameraViewScreen extends StatefulWidget {
-  const CameraViewScreen({Key? key}) : super(key: key);
+  final List<Medium> images;
+  const CameraViewScreen({Key? key, required this.images}) : super(key: key);
 
   @override
   State<CameraViewScreen> createState() => _CameraViewScreenState();
@@ -88,17 +89,28 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
     super.initState();
     _cameraController = CameraController(cameras![0], ResolutionPreset.high);
     _cameraValue = _cameraController!.initialize();
-    setState(() {
-      selectedImages.clear();
-      physical_status_selected.clear();
-    });
+    init();
     getImage();
   }
 
+  init() {
+    if (widget.images.isEmpty) {
+      setState(() {
+        selectedImages.clear();
+        physical_status_selected.clear();
+      });
+    } else {
+      setState(() {
+        selectedImages = widget.images;
+        widget.images.forEach((element) {
+          physical_status_selected.add(element.id);
+        });
+      });
+    }
+  }
+
   clickDoneButton() {
-    Get.to(ReportMainScreen(
-      selectedImages: selectedImages,
-    ));
+    Get.back(result: [selectedImages]);
   }
 
   clickDeleteButton() async {
@@ -125,12 +137,18 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            cameraView(_cameraController, _cameraValue),
-            bottomIcon(imagesMedia, physical_status_selected, onClickImage,
-                takeImage, clickDoneButton, clickDeleteButton),
-          ],
+        body: WillPopScope(
+          onWillPop: () async {
+            Get.back(result: [selectedImages]);
+            return true;
+          },
+          child: Stack(
+            children: [
+              cameraView(_cameraController, _cameraValue),
+              bottomIcon(imagesMedia, physical_status_selected, onClickImage,
+                  takeImage, clickDoneButton, clickDeleteButton),
+            ],
+          ),
         ),
       ),
     );
