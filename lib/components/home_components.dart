@@ -29,7 +29,7 @@ appBarLeading(VoidCallback onPressed) {
 appBarShape() {
   return const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(
-      bottom: Radius.circular(25),
+      bottom: Radius.circular(20),
     ),
   );
 }
@@ -98,7 +98,7 @@ appBarsecondTitle(VoidCallback clickSearch, String text) {
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(left: 10.w, bottom: 1.h, right: 1.w, top: 0),
+        padding: EdgeInsets.only(left: 5.w, bottom: 1.h, right: 1.w, top: 0),
         child: IconButton(
           onPressed: clickSearch,
           iconSize: 35,

@@ -32,3 +32,36 @@ String contactUsIcon = 'assets/images/contact_us.png';
 
 
 String cameraIcon = 'assets/images/camera_icon.png';
+
+String replaceIcon = 'assets/images/cr_replace_unselected_icon.png';
+String replaceSelectedIcon = 'assets/images/cr_replace_selected_icon.png';
+
+String repairIcon = 'assets/images/cr_repair_unselected_icon.png';
+String repairSelectedIcon = 'assets/images/cr_repair_selected_icon.png';
+
+String goodIcon = 'assets/images/cr_good_unselected_icon.png';
+String goodSelectedIcon = 'assets/images/cr_good_selected_icon.png';
+
+String fairIcon = 'assets/images/cr_fair_unselected_icon.png';
+String fairSelectedIcon = 'assets/images/cr_fair_selected_icon.png';
+
+String avarageIcon = 'assets/images/cr_avarage_unselected_icon.png';
+String avarageSelectedIcon = 'assets/images/cr_avarage_selected_icon.png';
+
+String rpOkIcon = 'assets/images/rp_ok_unselected_icon.png';
+String rpOKSelectedIcon = 'assets/images/rp_ok_selected_icon.png';
+
+String rpLowIcon = 'assets/images/rp_low_unselected_icon.png';
+String rpLowSelectedIcon = 'assets/images/rp_low_selected_icon.png';
+
+String rpHigh2Icon = 'assets/images/rp_high2_unselected_icon.png';
+String rpHigh2SelectedIcon = 'assets/images/rp_high2_selected_icon.png';
+
+String rpHighIcon = 'assets/images/rp_high_unselected_icon.png';
+String rpHighSelectedIcon = 'assets/images/rp_high_selected_icon.png';
+
+String rpAvarageIcon = 'assets/images/rp_avarage_unselected_icon.png';
+String rpAvarageSelectedIcon = 'assets/images/rp_avarage_selected_icon.png';
+
+String moreIcon = 'assets/images/more_icon.png';
+

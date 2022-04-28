@@ -5,6 +5,7 @@ import 'package:school/binding.dart';
 import 'package:school/screens/camera_view_screen.dart';
 import 'package:school/screens/home_page.dart';
 import 'package:school/screens/main_home_screen.dart';
+import 'package:school/screens/view_card_screen.dart';
 import 'package:school/utils/user_secure_storage.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,8 +32,8 @@ class MyApp extends StatelessWidget {
             fontFamily: 'segoeui',
             primarySwatch: Colors.blue,
           ),
-          home: const SetScreen(),
-          // home: HomePage(),
+          // home: const SetScreen(),
+          home: ViewCardScreen(),
         );
       },
     );

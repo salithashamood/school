@@ -24,13 +24,13 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
   List<Medium> selectedImages = [];
   Set<String> physical_status_selected = Set();
 
-  Future<List<Medium>?> getImage() async {
+  Future<List<Medium>> getImage() async {
     try {
       final List<Album> imagesAlbum =
           await PhotoGallery.listAlbums(mediumType: MediumType.image);
 
       imagesAlbum.forEach((element) async {
-        if (element.name == 'All') {
+        if (element.name == 'Cams') {
           final MediaPage mediaPage = await element.listMedia(newest: true);
           setState(() {
             imagesMedia = mediaPage.items;
@@ -41,6 +41,7 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
     } catch (e) {
       print(e.toString());
     }
+    return imagesMedia;
   }
 
   onClickImage(int index) {
@@ -69,10 +70,16 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
 
   takeImage() async {
     final img = await _cameraController!.takePicture();
-    await GallerySaver.saveImage(img.path).then((value) {
-      physical_status_selected.add(imagesMedia[0].id);
-      selectedImages.add(imagesMedia[0]);
-      getImage();
+    await GallerySaver.saveImage(img.path, albumName: 'Cams')
+        .then((value) async {
+      await getImage().then((data) {
+        Future.delayed(const Duration(seconds: 1)).then((value) {
+          setState(() {
+            physical_status_selected.add(imagesMedia.first.id);
+            selectedImages.add(imagesMedia.first);
+          });
+        });
+      });
     });
   }
 
@@ -94,7 +101,19 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
     ));
   }
 
-  clickDeleteButton() {}
+  clickDeleteButton() async {
+    selectedImages.forEach((element) async {
+      try {
+        final file = await element.getFile();
+        print(file);
+        file.delete();
+      } catch (e) {
+        print(e);
+      }
+    });
+    await getImage();
+    setState(() {});
+  }
 
   @override
   void dispose() {

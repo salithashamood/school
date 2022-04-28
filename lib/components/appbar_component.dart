@@ -16,7 +16,8 @@ class AppBarComponent extends StatefulWidget implements PreferredSizeWidget {
       this.title,
       this.scaffoldkey,
       required this.secondTitle,
-      required this.isHaveTitle, required this.isHomePage})
+      required this.isHaveTitle,
+      required this.isHomePage})
       : super(key: key);
 
   @override
@@ -53,12 +54,14 @@ class _AppBarComponentState extends State<AppBarComponent> {
       centerTitle: true,
       title: widget.isHaveTitle ? appBarTitle(widget.title!) : Container(),
       actions: [
-       widget.isHomePage ? appBarActionButton() : Container(),
+        widget.isHomePage ? appBarActionButton() : Container(),
       ],
-      leading: widget.isHomePage ? appBarLeading(clickDrawer) : IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.arrow_back),
-        ),
+      leading: widget.isHomePage
+          ? appBarLeading(clickDrawer)
+          : IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.arrow_back),
+            ),
     );
   }
 }

@@ -24,8 +24,13 @@ cameraView(CameraController? _cameraController, Future<void>? _cameraValue) {
   );
 }
 
-bottomIcon(List<Medium> imagesMedia, Set<String> physical_status_selected,
-    Function onClick, VoidCallback takeImage, VoidCallback pressedDone, VoidCallback pressedDelete) {
+bottomIcon(
+    List<Medium> imagesMedia,
+    Set<String> physical_status_selected,
+    Function onClick,
+    VoidCallback takeImage,
+    VoidCallback pressedDone,
+    VoidCallback pressedDelete) {
   return Positioned(
     bottom: 0,
     child: Container(
@@ -55,64 +60,114 @@ photoListView(List<Medium> imagesMedia, Set<String> physical_status_selected,
     itemCount: imagesMedia.length,
     itemBuilder: (context, index) {
       if (imagesMedia.isEmpty) {
-        return Container();
+        return Center(
+          child: Container(
+            child: Text('No pictures in Cams album'),
+          ),
+        );
       } else {
-        if (index == 0) {
-          return Container();
-        } else {
-          return InkWell(
-            onTap: () => onClick(index),
-            child: Container(
-                margin: const EdgeInsets.symmetric(
-                  vertical: 4,
-                  horizontal: 3,
-                ),
-                height: 10.h,
-                width: 10.h,
-                child: Stack(
-                  children: [
-                    SizedBox(
-                      height: 10.h,
-                      width: 10.h,
-                      child: FadeInImage(
-                        fit: BoxFit.cover,
-                        placeholder: MemoryImage(kTransparentImage),
-                        image: ThumbnailProvider(
-                          mediumId: imagesMedia[index].id,
-                          mediumType: imagesMedia[index].mediumType,
-                        ),
+        return InkWell(
+          onTap: () => onClick(index),
+          child: Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 4,
+                horizontal: 3,
+              ),
+              height: 10.h,
+              width: 10.h,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                    width: 10.h,
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      placeholder: MemoryImage(kTransparentImage),
+                      image: ThumbnailProvider(
+                        mediumId: imagesMedia[index].id,
+                        mediumType: imagesMedia[index].mediumType,
                       ),
                     ),
-                    Container(
-                      height: 10.h,
-                      width: 10.h,
-                      color: physical_status_selected
-                              .contains(imagesMedia[index].id)
-                          ? Colors.white.withOpacity(0.5)
-                          : Colors.transparent,
-                    ),
-                    physical_status_selected.contains(imagesMedia[index].id)
-                        ? const Positioned(
-                            top: 1,
-                            right: 3,
-                            child: Icon(
-                              Icons.check,
-                              size: 18,
-                              color: Colors.black,
-                            ),
-                          )
-                        : Container(),
-                  ],
-                )),
-          );
-        }
+                  ),
+                  Container(
+                    height: 10.h,
+                    width: 10.h,
+                    color:
+                        physical_status_selected.contains(imagesMedia[index].id)
+                            ? Colors.white.withOpacity(0.5)
+                            : Colors.transparent,
+                  ),
+                  physical_status_selected.contains(imagesMedia[index].id)
+                      ? const Positioned(
+                          top: 1,
+                          right: 3,
+                          child: Icon(
+                            Icons.check,
+                            size: 18,
+                            color: Colors.black,
+                          ),
+                        )
+                      : Container(),
+                ],
+              )),
+        );
+        // if (index == 0) {
+        //   return Container();
+        // } else {
+        //   return InkWell(
+        //     onTap: () => onClick(index),
+        //     child: Container(
+        //         margin: const EdgeInsets.symmetric(
+        //           vertical: 4,
+        //           horizontal: 3,
+        //         ),
+        //         height: 10.h,
+        //         width: 10.h,
+        //         child: Stack(
+        //           children: [
+        //             SizedBox(
+        //               height: 10.h,
+        //               width: 10.h,
+        //               child: FadeInImage(
+        //                 fit: BoxFit.cover,
+        //                 placeholder: MemoryImage(kTransparentImage),
+        //                 image: ThumbnailProvider(
+        //                   mediumId: imagesMedia[index].id,
+        //                   mediumType: imagesMedia[index].mediumType,
+        //                 ),
+        //               ),
+        //             ),
+        //             Container(
+        //               height: 10.h,
+        //               width: 10.h,
+        //               color: physical_status_selected
+        //                       .contains(imagesMedia[index].id)
+        //                   ? Colors.white.withOpacity(0.5)
+        //                   : Colors.transparent,
+        //             ),
+        //             physical_status_selected.contains(imagesMedia[index].id)
+        //                 ? const Positioned(
+        //                     top: 1,
+        //                     right: 3,
+        //                     child: Icon(
+        //                       Icons.check,
+        //                       size: 18,
+        //                       color: Colors.black,
+        //                     ),
+        //                   )
+        //                 : Container(),
+        //           ],
+        //         )),
+        //   );
+        // }
       }
     },
     scrollDirection: Axis.horizontal,
   );
 }
 
-actionIcon(VoidCallback takeImage, VoidCallback pressedDone, VoidCallback pressedDelete) {
+actionIcon(VoidCallback takeImage, VoidCallback pressedDone,
+    VoidCallback pressedDelete) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
