@@ -25,7 +25,7 @@ tabText(String tabName) {
   return Text(tabName);
 }
 
-tabBar() {
+tabBar(TabController tabController) {
   return DefaultTabController(
     length: 2,
     initialIndex: 0,
@@ -33,6 +33,7 @@ tabBar() {
     child: SizedBox(
       width: 44.w,
       child: TabBar(
+        controller: tabController,
         padding: const EdgeInsets.all(0),
         labelPadding: const EdgeInsets.only(bottom: 5),
         indicatorSize: TabBarIndicatorSize.label,
@@ -183,5 +184,121 @@ bottomLeftContainer() {
         ),
       ),
     ),
+  );
+}
+
+viewCardListView() {
+  List<String> listData = [
+    'Nunc dignissim risus id metus.',
+    'Cras ornare tristique elit.',
+    'Vivamus vestibulum ntulla nec ante.',
+    'Fusce pellentesque suscipit nibh.',
+    'Vestibulum commodo felis quis tortor.',
+    'Integer vitae libero ac risus egestas placerat.'
+  ];
+  return ListView.builder(
+    shrinkWrap: true,
+    itemCount: listData.length,
+    physics: NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Card(
+          color: Colors.white,
+          elevation: 3,
+          shadowColor: greyColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: ListTile(
+            title: Text(
+              listData[index],
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            subtitle: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: yellowColor,
+                  radius: 5,
+                ),
+                SizedBox(
+                  width: 2.w,
+                ),
+                Text(
+                  'In Progress',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0XFFA7A7A7),
+                  ),
+                ),
+              ],
+            ),
+            trailing: Image.asset(arrowRight, color: Colors.black),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+tabBarView(TabController _tabController) {
+  List data = [
+    [
+      {'name': 'Good', 'color': darkGreenColor, 'icon': goodIcon},
+      {'name': 'Fair', 'color': darkBrown1Color, 'icon': fairIcon},
+      {'name': 'Avarage', 'color': darkBlueColor, 'icon': avarageIcon},
+      {'name': 'Repair', 'color': darkBrown2Color, 'icon': repairIcon},
+      {'name': 'Replace', 'color': darkPinkColor, 'icon': replaceIcon},
+    ],
+    [
+      {'name': 'Ok', 'color': darkGreenColor, 'icon': rpOkIcon},
+      {'name': 'Low', 'color': darkBrown1Color, 'icon': rpLowIcon},
+      {'name': 'Avarage', 'color': darkBlueColor, 'icon': rpAvarageIcon},
+      {'name': 'High', 'color': darkBrown2Color, 'icon': rpHighIcon},
+      {'name': 'High', 'color': darkPinkColor, 'icon': rpHigh2Icon},
+    ],
+  ];
+  return SizedBox(
+    height: 17.h,
+    child: TabBarView(
+      controller: _tabController,
+      children: [
+        tabBarColumnItem(data, 0),
+        tabBarColumnItem(data, 1),
+      ],
+    ),
+  );
+}
+
+tabBarColumnItem(List data, int index) {
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          topImageIcons(data[index][0]['name'], data[index][0]['color'],
+              data[index][0]['icon']),
+          topImageIcons(data[index][1]['name'], data[index][1]['color'],
+              data[index][1]['icon']),
+          topImageIcons(data[index][2]['name'], data[index][2]['color'],
+              data[index][2]['icon']),
+          topImageIcons(data[index][3]['name'], data[index][3]['color'],
+              data[index][3]['icon']),
+          topImageIcons(data[index][4]['name'], data[index][4]['color'],
+              data[index][4]['icon']),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          bottomLeftContainer(),
+          bottomRightNumberContainer(),
+        ],
+      ),
+    ],
   );
 }

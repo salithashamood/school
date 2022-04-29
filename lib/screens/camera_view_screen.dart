@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:school/components/camera_screen_components.dart';
 import 'package:school/screens/report_main_screen.dart';
+import 'package:school/utils/image.dart';
 import 'package:sizer/sizer.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -114,16 +115,22 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
   }
 
   clickDeleteButton() async {
+    List<Medium> toRemove = [];
     selectedImages.forEach((element) async {
       try {
         final file = await element.getFile();
         print(file);
         file.delete();
+        toRemove.add(element);
       } catch (e) {
         print(e);
       }
     });
-    await getImage();
+    Future.delayed(Duration(seconds: 1)).then((v) async {
+      selectedImages.removeWhere((e) => toRemove.contains(e));
+
+      await getImage();
+    });
     setState(() {});
   }
 
@@ -147,6 +154,7 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
               cameraView(_cameraController, _cameraValue),
               bottomIcon(imagesMedia, physical_status_selected, onClickImage,
                   takeImage, clickDoneButton, clickDeleteButton),
+              topCloseButton(clickDoneButton),
             ],
           ),
         ),

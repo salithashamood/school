@@ -5,6 +5,8 @@ import 'package:photo_gallery/photo_gallery.dart';
 import 'package:sizer/sizer.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import '../utils/image.dart';
+
 cameraView(CameraController? _cameraController, Future<void>? _cameraValue) {
   return SizedBox(
     width: 100.w,
@@ -111,55 +113,6 @@ photoListView(List<Medium> imagesMedia, Set<String> physical_status_selected,
                 ],
               )),
         );
-        // if (index == 0) {
-        //   return Container();
-        // } else {
-        //   return InkWell(
-        //     onTap: () => onClick(index),
-        //     child: Container(
-        //         margin: const EdgeInsets.symmetric(
-        //           vertical: 4,
-        //           horizontal: 3,
-        //         ),
-        //         height: 10.h,
-        //         width: 10.h,
-        //         child: Stack(
-        //           children: [
-        //             SizedBox(
-        //               height: 10.h,
-        //               width: 10.h,
-        //               child: FadeInImage(
-        //                 fit: BoxFit.cover,
-        //                 placeholder: MemoryImage(kTransparentImage),
-        //                 image: ThumbnailProvider(
-        //                   mediumId: imagesMedia[index].id,
-        //                   mediumType: imagesMedia[index].mediumType,
-        //                 ),
-        //               ),
-        //             ),
-        //             Container(
-        //               height: 10.h,
-        //               width: 10.h,
-        //               color: physical_status_selected
-        //                       .contains(imagesMedia[index].id)
-        //                   ? Colors.white.withOpacity(0.5)
-        //                   : Colors.transparent,
-        //             ),
-        //             physical_status_selected.contains(imagesMedia[index].id)
-        //                 ? const Positioned(
-        //                     top: 1,
-        //                     right: 3,
-        //                     child: Icon(
-        //                       Icons.check,
-        //                       size: 18,
-        //                       color: Colors.black,
-        //                     ),
-        //                   )
-        //                 : Container(),
-        //           ],
-        //         )),
-        //   );
-        // }
       }
     },
     scrollDirection: Axis.horizontal,
@@ -192,6 +145,17 @@ actionButton(String text, Color color, VoidCallback pressed) {
       primary: color,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+    ),
+  );
+}
+
+topCloseButton(VoidCallback clickIcon) {
+  return Positioned(
+    top: 0,
+    right: 0,
+    child: TextButton(
+      child: Image.asset(drawerCloseButton),
+      onPressed: clickIcon,
     ),
   );
 }
