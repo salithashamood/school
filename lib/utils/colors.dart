@@ -15,4 +15,5 @@ Color darkBrown1Color = Color(0XFF715700);
 Color darkBlueColor = Color(0XFF160056);
 Color darkBrown2Color = Color(0XFF682A00);
 Color darkPinkColor = Color(0XFFFF2A7A);
-Color orangekColor = Color(0XFFFF4B4B);
+Color orangeColor = Color(0XFFFF4B4B);
+Color cancelButtonColor = Color(0XFF545454);

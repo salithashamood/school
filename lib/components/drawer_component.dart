@@ -90,8 +90,6 @@ class _DrawerComponentState extends State<DrawerComponent> {
                                 isSwitched = !isSwitched;
                               });
                             },
-                            // activeColor: primaryColor,
-                            // activeTrackColor: Colors.blue,
                           ),
                         ],
                       ),

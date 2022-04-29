@@ -70,8 +70,6 @@ loginButton(double paddin) {
                       'Not a valid user name', 'Enter valid user name');
                 }
               }
-              // print(_loginController.userName.value.text);
-              // print(_loginController.password.value.text);
             },
     ),
   );

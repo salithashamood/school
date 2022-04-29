@@ -6,7 +6,6 @@ import 'package:school/components/view_card_components.dart';
 import 'package:school/components/view_card_top_component.dart';
 import 'package:school/screens/camera_view_screen.dart';
 import 'package:school/utils/colors.dart';
-import 'package:school/utils/image.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/permission_controller.dart';
@@ -65,17 +64,15 @@ class _ViewCardScreenState extends State<ViewCardScreen>
         child: SizedBox(
           width: 100.w,
           height: 100.h,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ViewCardTopComponent(
-                    cameraClick: clickCameraIcon,
-                    images: images,
-                    tabController: _tabController!,),
-                viewCardListView(),
-              ],
-            ),
+          child: ListView(
+            children: [
+              ViewCardTopComponent(
+                cameraClick: clickCameraIcon,
+                images: images,
+                tabController: _tabController!,
+              ),
+              viewCardListView()
+            ],
           ),
         ),
       ),

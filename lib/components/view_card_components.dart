@@ -66,7 +66,7 @@ rightActionIcon(
                     top: 0,
                     right: 0,
                     child: CircleAvatar(
-                      backgroundColor: orangekColor,
+                      backgroundColor: orangeColor,
                       child: Text(
                         images.length.toString(),
                         style: TextStyle(fontSize: 9, color: Colors.white),
@@ -82,19 +82,22 @@ rightActionIcon(
   );
 }
 
-leftIcon() {
+leftIcon(VoidCallback onClick) {
   return Row(
     children: [
       SizedBox(
         width: 28.w,
-        child: Text(
-          'Door - Glass Work',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-            color: primaryTextColor,
+        child: InkWell(
+          onTap: onClick,
+          child: Text(
+            'Door - Glass Work',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+              color: primaryTextColor,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
-          overflow: TextOverflow.ellipsis,
         ),
       ),
       Container(
@@ -245,7 +248,7 @@ viewCardListView() {
   );
 }
 
-tabBarView(TabController _tabController) {
+tabBarView(TabController _tabController, bool visibility) {
   List data = [
     [
       {'name': 'Good', 'color': darkGreenColor, 'icon': goodIcon},
@@ -262,43 +265,225 @@ tabBarView(TabController _tabController) {
       {'name': 'High', 'color': darkPinkColor, 'icon': rpHigh2Icon},
     ],
   ];
-  return SizedBox(
-    height: 17.h,
+  return Flexible(
     child: TabBarView(
       controller: _tabController,
       children: [
-        tabBarColumnItem(data, 0),
-        tabBarColumnItem(data, 1),
+        tabBarColumnItem(data, 0, visibility),
+        tabBarColumnItem(data, 1, visibility),
       ],
     ),
   );
 }
 
-tabBarColumnItem(List data, int index) {
-  return Column(
+tabBarColumnItem(List data, int index, bool visibility) {
+  bool isSwitched = true;
+  return SizedBox(
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            topImageIcons(data[index][0]['name'], data[index][0]['color'],
+                data[index][0]['icon']),
+            topImageIcons(data[index][1]['name'], data[index][1]['color'],
+                data[index][1]['icon']),
+            topImageIcons(data[index][2]['name'], data[index][2]['color'],
+                data[index][2]['icon']),
+            topImageIcons(data[index][3]['name'], data[index][3]['color'],
+                data[index][3]['icon']),
+            topImageIcons(data[index][4]['name'], data[index][4]['color'],
+                data[index][4]['icon']),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            bottomLeftContainer(),
+            bottomRightNumberContainer(),
+          ],
+        ),
+        expandedDetails(isSwitched, visibility),
+      ],
+    ),
+  );
+}
+
+expandedDetails(bool isSwitched, bool visibility) {
+  return Visibility(
+    visible: visibility,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+      child: Form(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            descriptionField(),
+            sizedBox(2.h),
+            additionalCommentsField(),
+            sizedBox(2.h),
+            rfidField(),
+            sizedBox(2.h),
+            mapField(),
+            sizedBox(3.h),
+            maintenanceDetailsText(),
+            sizedBox(2.h),
+            workField(),
+            sizedBox(2.h),
+            dradeField(),
+            sizedBox(2.h),
+            defectsDetailsSwitch(isSwitched),
+            button(),
+            sizedBox(1.h),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+defectsDetailsSwitch(bool isSwitched) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          topImageIcons(data[index][0]['name'], data[index][0]['color'],
-              data[index][0]['icon']),
-          topImageIcons(data[index][1]['name'], data[index][1]['color'],
-              data[index][1]['icon']),
-          topImageIcons(data[index][2]['name'], data[index][2]['color'],
-              data[index][2]['icon']),
-          topImageIcons(data[index][3]['name'], data[index][3]['color'],
-              data[index][3]['icon']),
-          topImageIcons(data[index][4]['name'], data[index][4]['color'],
-              data[index][4]['icon']),
-        ],
+      Text(
+        'Defects Details',
+        style: TextStyle(
+            color: darkGreyColor, fontSize: 12, fontWeight: FontWeight.w600),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          bottomLeftContainer(),
-          bottomRightNumberContainer(),
-        ],
+      Switch(
+        value: isSwitched,
+        onChanged: (v) {
+          isSwitched = !isSwitched;
+        },
       ),
+    ],
+  );
+}
+
+maintenanceDetailsText() {
+  return Text(
+    'Maintenance Details',
+    style: TextStyle(
+        color: darkGreyColor, fontSize: 12, fontWeight: FontWeight.w600),
+  );
+}
+
+descriptionField() {
+  return TextFormField(
+    maxLines: 4,
+    decoration:
+        textFieldInputDecoration('Description', false, Icons.qr_code_scanner),
+  );
+}
+
+additionalCommentsField() {
+  return TextFormField(
+    decoration: textFieldInputDecoration(
+        'Additional Comments', false, Icons.qr_code_scanner),
+  );
+}
+
+rfidField() {
+  return TextFormField(
+    readOnly: true,
+    decoration: textFieldInputDecoration('RFID', true, Icons.qr_code_scanner),
+  );
+}
+
+mapField() {
+  return TextFormField(
+    readOnly: true,
+    decoration: textFieldInputDecoration('Map', true, Icons.map),
+  );
+}
+
+workField() {
+  return TextFormField(
+    decoration: textFieldInputDecoration('Work', false, Icons.qr_code_scanner),
+  );
+}
+
+dradeField() {
+  return Row(
+    children: [
+      Expanded(
+        child: TextFormField(
+          decoration:
+              textFieldInputDecoration('99.00', false, Icons.qr_code_scanner),
+        ),
+      ),
+      SizedBox(
+        width: 4.w,
+      ),
+      Expanded(
+        child: TextFormField(
+          decoration:
+              textFieldInputDecoration('Drade', false, Icons.qr_code_scanner),
+        ),
+      ),
+    ],
+  );
+}
+
+sizedBox(double height) {
+  return SizedBox(
+    height: height,
+  );
+}
+
+textFieldInputDecoration(String text, bool isHaveSuffixIcon, IconData icon) {
+  return InputDecoration(
+    suffixIcon: isHaveSuffixIcon
+        ? Container(
+            decoration: BoxDecoration(
+                border: Border(left: BorderSide(color: greyColor))),
+            child: Icon(
+              icon,
+              color: greyColor,
+            ),
+          )
+        : null,
+    fillColor: lightGreyColor,
+    filled: true,
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: greyColor),
+      borderRadius: BorderRadius.circular(7),
+    ),
+    hintText: text,
+    hintStyle: TextStyle(color: darkGreyColor, fontSize: 14),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: greyColor),
+      borderRadius: BorderRadius.circular(7),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: greyColor),
+      borderRadius: BorderRadius.circular(7),
+    ),
+  );
+}
+
+bottomButton(String text, Color color) {
+  return ElevatedButton(
+    onPressed: () {},
+    style: ElevatedButton.styleFrom(
+      primary: color,
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+    ),
+    child: Text(
+      text,
+      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+button() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      bottomButton('Cancel', cancelButtonColor),
+      bottomButton('Login', primaryColor),
     ],
   );
 }
