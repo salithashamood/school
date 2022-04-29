@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:photo_gallery/photo_gallery.dart';
+import 'package:school/screens/google_map_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../utils/colors.dart';
 import '../utils/image.dart';
@@ -87,35 +89,43 @@ leftIcon(VoidCallback onClick) {
     children: [
       SizedBox(
         width: 28.w,
-        child: InkWell(
-          onTap: onClick,
-          child: Text(
-            'Door - Glass Work',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
-              color: primaryTextColor,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
+        child: titleWidget(onClick),
       ),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
-        decoration: BoxDecoration(
-          color: yellowColor,
-          borderRadius: BorderRadius.all(Radius.circular(5.sp)),
-        ),
-        child: const Text(
-          'A45878788',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-            color: Colors.black,
-          ),
-        ),
-      ),
+      numberWidget(),
     ],
+  );
+}
+
+numberWidget() {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+    decoration: BoxDecoration(
+      color: yellowColor,
+      borderRadius: BorderRadius.all(Radius.circular(5.sp)),
+    ),
+    child: const Text(
+      'A45878788',
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+        color: Colors.black,
+      ),
+    ),
+  );
+}
+
+titleWidget(VoidCallback onClick) {
+  return InkWell(
+    onTap: onClick,
+    child: Text(
+      'Door - Glass and Wood front doors',
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+        color: primaryTextColor,
+      ),
+      overflow: TextOverflow.ellipsis,
+    ),
   );
 }
 
@@ -248,7 +258,8 @@ viewCardListView() {
   );
 }
 
-tabBarView(TabController _tabController, bool visibility) {
+tabBarView(TabController _tabController, bool visibility, VoidCallback gotoMap,
+    VoidCallback gotoQR) {
   List data = [
     [
       {'name': 'Good', 'color': darkGreenColor, 'icon': goodIcon},
@@ -269,14 +280,15 @@ tabBarView(TabController _tabController, bool visibility) {
     child: TabBarView(
       controller: _tabController,
       children: [
-        tabBarColumnItem(data, 0, visibility),
-        tabBarColumnItem(data, 1, visibility),
+        tabBarColumnItem(data, 0, visibility, gotoMap, gotoQR),
+        tabBarColumnItem(data, 1, visibility, gotoMap, gotoQR),
       ],
     ),
   );
 }
 
-tabBarColumnItem(List data, int index, bool visibility) {
+tabBarColumnItem(List data, int index, bool visibility, VoidCallback gotoMap,
+    VoidCallback gotoQR) {
   bool isSwitched = true;
   return SizedBox(
     child: Column(
@@ -303,13 +315,14 @@ tabBarColumnItem(List data, int index, bool visibility) {
             bottomRightNumberContainer(),
           ],
         ),
-        expandedDetails(isSwitched, visibility),
+        expandedDetails(isSwitched, visibility, gotoMap, gotoQR),
       ],
     ),
   );
 }
 
-expandedDetails(bool isSwitched, bool visibility) {
+expandedDetails(bool isSwitched, bool visibility, VoidCallback gotoMap,
+    VoidCallback gotoQR) {
   return Visibility(
     visible: visibility,
     child: Padding(
@@ -322,17 +335,22 @@ expandedDetails(bool isSwitched, bool visibility) {
             sizedBox(2.h),
             additionalCommentsField(),
             sizedBox(2.h),
-            rfidField(),
+            rfidField(gotoQR),
             sizedBox(2.h),
-            mapField(),
+            mapField(gotoMap),
             sizedBox(3.h),
             maintenanceDetailsText(),
             sizedBox(2.h),
             workField(),
             sizedBox(2.h),
             dradeField(),
-            sizedBox(2.h),
+            sizedBox(1.h),
             defectsDetailsSwitch(isSwitched),
+            sizedBox(1.h),
+            workField(),
+            sizedBox(2.h),
+            dradeField(),
+            sizedBox(2.h),
             button(),
             sizedBox(1.h),
           ],
@@ -372,35 +390,35 @@ maintenanceDetailsText() {
 descriptionField() {
   return TextFormField(
     maxLines: 4,
-    decoration:
-        textFieldInputDecoration('Description', false, Icons.qr_code_scanner),
+    decoration: textFieldInputDecoration('Description'),
   );
 }
 
 additionalCommentsField() {
   return TextFormField(
-    decoration: textFieldInputDecoration(
-        'Additional Comments', false, Icons.qr_code_scanner),
+    decoration: textFieldInputDecoration('Additional Comments'),
   );
 }
 
-rfidField() {
+rfidField(VoidCallback onClick) {
   return TextFormField(
     readOnly: true,
-    decoration: textFieldInputDecoration('RFID', true, Icons.qr_code_scanner),
+    decoration: textFieldInputDecorationWithSuffix(
+        'RFID', Icons.qr_code_scanner, onClick),
   );
 }
 
-mapField() {
+mapField(VoidCallback onClick) {
   return TextFormField(
     readOnly: true,
-    decoration: textFieldInputDecoration('Map', true, Icons.map),
+    decoration:
+        textFieldInputDecorationWithSuffix('Location', Icons.map, onClick),
   );
 }
 
 workField() {
   return TextFormField(
-    decoration: textFieldInputDecoration('Work', false, Icons.qr_code_scanner),
+    decoration: textFieldInputDecoration('Work'),
   );
 }
 
@@ -409,8 +427,7 @@ dradeField() {
     children: [
       Expanded(
         child: TextFormField(
-          decoration:
-              textFieldInputDecoration('99.00', false, Icons.qr_code_scanner),
+          decoration: textFieldInputDecoration('99.00'),
         ),
       ),
       SizedBox(
@@ -418,8 +435,7 @@ dradeField() {
       ),
       Expanded(
         child: TextFormField(
-          decoration:
-              textFieldInputDecoration('Drade', false, Icons.qr_code_scanner),
+          decoration: textFieldInputDecoration('Drade'),
         ),
       ),
     ],
@@ -432,18 +448,41 @@ sizedBox(double height) {
   );
 }
 
-textFieldInputDecoration(String text, bool isHaveSuffixIcon, IconData icon) {
+textFieldInputDecoration(String text) {
   return InputDecoration(
-    suffixIcon: isHaveSuffixIcon
-        ? Container(
-            decoration: BoxDecoration(
-                border: Border(left: BorderSide(color: greyColor))),
-            child: Icon(
-              icon,
-              color: greyColor,
-            ),
-          )
-        : null,
+    fillColor: lightGreyColor,
+    filled: true,
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: greyColor),
+      borderRadius: BorderRadius.circular(7),
+    ),
+    hintText: text,
+    hintStyle: TextStyle(color: darkGreyColor, fontSize: 14),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: greyColor),
+      borderRadius: BorderRadius.circular(7),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: greyColor),
+      borderRadius: BorderRadius.circular(7),
+    ),
+  );
+}
+
+textFieldInputDecorationWithSuffix(
+    String text, IconData icon, VoidCallback onClick) {
+  return InputDecoration(
+    suffixIcon: InkWell(
+      onTap: onClick,
+      child: Container(
+        decoration:
+            BoxDecoration(border: Border(left: BorderSide(color: greyColor))),
+        child: Icon(
+          icon,
+          color: greyColor,
+        ),
+      ),
+    ),
     fillColor: lightGreyColor,
     filled: true,
     border: OutlineInputBorder(
@@ -484,6 +523,61 @@ button() {
     children: [
       bottomButton('Cancel', cancelButtonColor),
       bottomButton('Login', primaryColor),
+    ],
+  );
+}
+
+bottomComponents(VoidCallback onClick) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    width: 100.w,
+    height: 45.h,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        titleWidget(onClick),
+        sizedBox(1.h),
+        numberWidget(),
+        sizedBox(3.h),
+        bottomRow(Icons.replay_circle_filled, 'View Previous Inspection',
+            Color(0XFF4A4A4A)),
+        Divider(
+          thickness: 1,
+        ),
+        bottomRow(Icons.location_on_outlined, 'Location', Color(0XFF4A4A4A)),
+        Divider(
+          thickness: 1,
+        ),
+        bottomRow(Icons.copy, 'Save as template', Color(0XFF4A4A4A)),
+        Divider(
+          thickness: 1,
+        ),
+        bottomRow(
+            Icons.announcement_outlined, 'View Details', Color(0XFF4A4A4A)),
+        Divider(
+          thickness: 1,
+        ),
+        bottomRow(Icons.delete, 'Delete', Colors.red),
+      ],
+    ),
+  );
+}
+
+bottomRow(IconData icon, String text, Color color) {
+  return Row(
+    children: [
+      Icon(
+        icon,
+        color: color,
+      ),
+      SizedBox(
+        width: 4.w,
+      ),
+      Text(
+        text,
+        style:
+            TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: color),
+      ),
     ],
   );
 }

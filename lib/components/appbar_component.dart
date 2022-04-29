@@ -50,8 +50,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
       elevation: 5,
       shape: appBarShape(),
       toolbarHeight: widget.toolBarHeight,
-      bottom: appBarPreferredSize(searchController, clickSearchButton,
-          isClickButton, widget.secondTitle),
+      bottom: widget.secondTitle == ''
+          ? null
+          : appBarPreferredSize(searchController, clickSearchButton,
+              isClickButton, widget.secondTitle),
       backgroundColor: primaryColor,
       centerTitle: true,
       title: widget.isHaveTitle ? appBarTitle(widget.title!) : Container(),
