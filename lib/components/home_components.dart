@@ -15,10 +15,12 @@ appBarTitle(String title) {
 }
 
 appBarActionButton() {
-  return IconButton(
-    onPressed: () {},
-    icon: Image.asset(drawerImage),
-  );
+  return [
+    IconButton(
+      onPressed: () {},
+      icon: Image.asset(drawerImage),
+    )
+  ];
 }
 
 appBarLeading(VoidCallback onPressed) {
@@ -159,10 +161,12 @@ tabBarViewColumn(String text) {
           'Jul 07.2021',
           style: TextStyle(fontWeight: FontWeight.w200, color: Colors.grey),
         ),
-        Text(text,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-            ),),
+        Text(
+          text,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ],
     ),
   );

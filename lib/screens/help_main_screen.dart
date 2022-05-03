@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:school/components/appbar_component.dart';
 import 'package:school/components/help_main_components.dart';
 import 'package:sizer/sizer.dart';
@@ -21,6 +22,9 @@ class _HelpMainScreenState extends State<HelpMainScreen> {
       isClickButton = !isClickButton;
     });
   }
+  tapBackButton() {
+    Get.back();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,7 @@ class _HelpMainScreenState extends State<HelpMainScreen> {
         isHomePage: false,
         secondTitle: 'Help',
         toolBarHeight: 13.h,
+        backTap: tapBackButton,
       ),
       body: helpList(),
     );

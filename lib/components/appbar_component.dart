@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school/components/home_components.dart';
+import 'package:school/components/view_card_components.dart';
 
 import '../utils/colors.dart';
 
@@ -11,6 +12,8 @@ class AppBarComponent extends StatefulWidget implements PreferredSizeWidget {
   final String secondTitle;
   final bool isHaveTitle;
   final bool isHomePage;
+  final VoidCallback backTap;
+  final VoidCallback? tapFilter;
   const AppBarComponent(
       {Key? key,
       required this.toolBarHeight,
@@ -18,7 +21,8 @@ class AppBarComponent extends StatefulWidget implements PreferredSizeWidget {
       this.scaffoldkey,
       required this.secondTitle,
       required this.isHaveTitle,
-      required this.isHomePage})
+      required this.isHomePage,
+      required this.backTap, this.tapFilter})
       : super(key: key);
 
   @override
@@ -57,15 +61,15 @@ class _AppBarComponentState extends State<AppBarComponent> {
       backgroundColor: primaryColor,
       centerTitle: true,
       title: widget.isHaveTitle ? appBarTitle(widget.title!) : Container(),
-      actions: [
-        widget.isHomePage ? appBarActionButton() : Container(),
-      ],
+      actions: widget.isHomePage && widget.isHaveTitle
+          ? appBarActionButton()
+          : widget.isHaveTitle && widget.secondTitle != ''
+              ? appBarAction(widget.tapFilter!)
+              : null,
       leading: widget.isHomePage
           ? appBarLeading(clickDrawer)
           : IconButton(
-              onPressed: () {
-                Get.back();
-              },
+              onPressed: widget.backTap,
               icon: Icon(Icons.arrow_back),
             ),
     );

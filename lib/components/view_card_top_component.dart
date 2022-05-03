@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:school/components/view_card_components.dart';
+import 'package:school/controllers/permission_controller.dart';
 import 'package:school/screens/qr_view_screen.dart';
+import 'package:school/screens/view_previous_inspection._screen.dart';
 import 'package:sizer/sizer.dart';
 import '../screens/google_map_screen.dart';
 import '../utils/colors.dart';
@@ -25,6 +28,9 @@ class ViewCardTopComponent extends StatefulWidget {
 
 class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
   bool isExpanded = false;
+  bool isSelected = false;
+  var locationController = TextEditingController();
+  LatLng? location;
   @override
   void initState() {
     super.initState();
@@ -36,21 +42,53 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
     });
   }
 
-  gotoMap() {
-    Get.to(GoogleMapScreen());
+  bool onSwitched(e) {
+    setState(() {
+      isSelected = e;
+    });
+    return isSelected;
   }
 
-  gotoQR() {
-    Get.to(QRVIewScreen());
+  gotoMap() async {
+    bool isPermissioned = await premissionLocation();
+    if (isPermissioned) {
+      Get.to(GoogleMapScreen())!.then((value) {
+        if (value[0] == null) {
+        } else {
+          setState(() {
+            location = value[0];
+            double latitiude = location!.latitude;
+            double longitude = location!.longitude;
+            locationController.text = '$latitiude , $longitude';
+          });
+        }
+      });
+    } else {
+      Get.snackbar('Request Permission', 'Can\'t move map without permission');
+    }
+  }
+
+  gotoQR() async {
+    bool isPermissioned = await permissionCamera();
+    if (isPermissioned) {
+      Get.to(QRVIewScreen());
+    } else {
+      Get.snackbar(
+          'Request Permission', 'Can\'t move camera without permission');
+    }
   }
 
   moreClick() {
     showModalBottomSheet(
       context: context,
       builder: (builder) {
-        return bottomComponents(onTitleClick);
+        return bottomComponents(() {}, clickViewPreviousInspection);
       },
     );
+  }
+
+  clickViewPreviousInspection() {
+    Get.to(ViewPreviousInspection());
   }
 
   @override
@@ -63,7 +101,11 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
         borderRadius: BorderRadius.circular(14),
       ),
       child: Container(
-        height: isExpanded ? 135.h : 30.h,
+        height: isExpanded
+            ? isSelected
+                ? 147.h
+                : 130.h
+            : 30.h,
         margin: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +132,8 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
               color: greyColor,
               thickness: 0.5,
             ),
-            tabBarView(widget.tabController, isExpanded, gotoMap, gotoQR),
+            tabBarView(widget.tabController, isExpanded, gotoMap, gotoQR,
+                isSelected, onSwitched, locationController),
           ],
         ),
       ),

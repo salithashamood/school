@@ -146,12 +146,29 @@ bottomRightNumberContainer() {
             decoration: BoxDecoration(border: Border.all(width: 0.1)),
             child: Image.asset(minusIcon),
           ),
-          Text(
-            '00',
-            style: TextStyle(
-                color: primaryTextColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 18),
+          Padding(
+            padding: const EdgeInsets.only(top: 1, bottom: 1),
+            child: SizedBox(
+              width: 8.w,
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
+                  hintText: '00',
+                ),
+                initialValue: '00',
+                keyboardType: TextInputType.number,
+                style: TextStyle(
+                    color: primaryTextColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
+            ),
           ),
           Container(
             decoration: BoxDecoration(border: Border.all(width: 0.1)),
@@ -258,8 +275,14 @@ viewCardListView() {
   );
 }
 
-tabBarView(TabController _tabController, bool visibility, VoidCallback gotoMap,
-    VoidCallback gotoQR) {
+tabBarView(
+    TabController _tabController,
+    bool visibility,
+    VoidCallback gotoMap,
+    VoidCallback gotoQR,
+    bool isSwitched,
+    Function(bool) onSwitched,
+    TextEditingController locationController) {
   List data = [
     [
       {'name': 'Good', 'color': darkGreenColor, 'icon': goodIcon},
@@ -280,16 +303,24 @@ tabBarView(TabController _tabController, bool visibility, VoidCallback gotoMap,
     child: TabBarView(
       controller: _tabController,
       children: [
-        tabBarColumnItem(data, 0, visibility, gotoMap, gotoQR),
-        tabBarColumnItem(data, 1, visibility, gotoMap, gotoQR),
+        tabBarColumnItem(data, 0, visibility, gotoMap, gotoQR, isSwitched,
+            onSwitched, locationController),
+        tabBarColumnItem(data, 1, visibility, gotoMap, gotoQR, isSwitched,
+            onSwitched, locationController),
       ],
     ),
   );
 }
 
-tabBarColumnItem(List data, int index, bool visibility, VoidCallback gotoMap,
-    VoidCallback gotoQR) {
-  bool isSwitched = true;
+tabBarColumnItem(
+    List data,
+    int index,
+    bool visibility,
+    VoidCallback gotoMap,
+    VoidCallback gotoQR,
+    bool isSwitched,
+    Function(bool) onSwitched,
+    TextEditingController locationController) {
   return SizedBox(
     child: Column(
       children: [
@@ -315,14 +346,20 @@ tabBarColumnItem(List data, int index, bool visibility, VoidCallback gotoMap,
             bottomRightNumberContainer(),
           ],
         ),
-        expandedDetails(isSwitched, visibility, gotoMap, gotoQR),
+        expandedDetails(isSwitched, visibility, gotoMap, gotoQR, onSwitched,
+            locationController),
       ],
     ),
   );
 }
 
-expandedDetails(bool isSwitched, bool visibility, VoidCallback gotoMap,
-    VoidCallback gotoQR) {
+expandedDetails(
+    bool isSwitched,
+    bool visibility,
+    VoidCallback gotoMap,
+    VoidCallback gotoQR,
+    Function(bool) onSwitched,
+    TextEditingController locationController) {
   return Visibility(
     visible: visibility,
     child: Padding(
@@ -337,7 +374,7 @@ expandedDetails(bool isSwitched, bool visibility, VoidCallback gotoMap,
             sizedBox(2.h),
             rfidField(gotoQR),
             sizedBox(2.h),
-            mapField(gotoMap),
+            mapField(gotoMap, locationController),
             sizedBox(3.h),
             maintenanceDetailsText(),
             sizedBox(2.h),
@@ -345,13 +382,12 @@ expandedDetails(bool isSwitched, bool visibility, VoidCallback gotoMap,
             sizedBox(2.h),
             dradeField(),
             sizedBox(1.h),
-            defectsDetailsSwitch(isSwitched),
-            sizedBox(1.h),
-            workField(),
-            sizedBox(2.h),
-            dradeField(),
+            defectsDetailsSwitch(isSwitched, onSwitched),
+            defectsSwitcheVisibilityWidget(isSwitched),
             sizedBox(2.h),
             button(),
+            sizedBox(2.h),
+            bottomButton('SAVE & PROCEED', primaryColor, true),
             sizedBox(1.h),
           ],
         ),
@@ -360,7 +396,21 @@ expandedDetails(bool isSwitched, bool visibility, VoidCallback gotoMap,
   );
 }
 
-defectsDetailsSwitch(bool isSwitched) {
+defectsSwitcheVisibilityWidget(bool isSwitched) {
+  return Visibility(
+    visible: isSwitched,
+    child: Column(
+      children: [
+        sizedBox(1.h),
+        workField(),
+        sizedBox(2.h),
+        dradeField(),
+      ],
+    ),
+  );
+}
+
+defectsDetailsSwitch(bool isSwitched, Function(bool) onSwitched) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -371,9 +421,7 @@ defectsDetailsSwitch(bool isSwitched) {
       ),
       Switch(
         value: isSwitched,
-        onChanged: (v) {
-          isSwitched = !isSwitched;
-        },
+        onChanged: onSwitched,
       ),
     ],
   );
@@ -408,8 +456,9 @@ rfidField(VoidCallback onClick) {
   );
 }
 
-mapField(VoidCallback onClick) {
+mapField(VoidCallback onClick, TextEditingController locationController) {
   return TextFormField(
+    controller: locationController,
     readOnly: true,
     decoration:
         textFieldInputDecorationWithSuffix('Location', Icons.map, onClick),
@@ -423,6 +472,8 @@ workField() {
 }
 
 dradeField() {
+  String select = 'Drade';
+  List dropDownList = ['A', 'B', 'C', 'D'];
   return Row(
     children: [
       Expanded(
@@ -434,9 +485,39 @@ dradeField() {
         width: 4.w,
       ),
       Expanded(
-        child: TextFormField(
-          decoration: textFieldInputDecoration('Drade'),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(7)),
+            color: lightGreyColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+            child: DropdownButton(
+              underline: Container(),
+              items: dropDownList.map<DropdownMenuItem<String>>((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(value),
+                  ),
+                );
+              }).toList(),
+              onChanged: (val) {},
+              isExpanded: true,
+              // isDense: true,
+              // value: select,
+              hint: Text(
+                'Drade',
+                style: TextStyle(color: darkGreyColor, fontSize: 14),
+              ),
+              style: TextStyle(color: darkGreyColor, fontSize: 14),
+            ),
+          ),
         ),
+        // child: TextFormField(
+        //   decoration: textFieldInputDecoration('Drade'),
+        // ),
       ),
     ],
   );
@@ -502,12 +583,18 @@ textFieldInputDecorationWithSuffix(
   );
 }
 
-bottomButton(String text, Color color) {
+bottomButton(String text, Color color, bool isExpanded) {
   return ElevatedButton(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
       primary: color,
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15),
+      padding: EdgeInsets.symmetric(
+          horizontal: isExpanded
+              ? 28.8.w
+              : text == 'CANCEL'
+                  ? 15.w
+                  : 10.w,
+          vertical: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
     ),
     child: Text(
@@ -521,13 +608,13 @@ button() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      bottomButton('Cancel', cancelButtonColor),
-      bottomButton('Login', primaryColor),
+      bottomButton('CANCEL', cancelButtonColor, false),
+      bottomButton('SAVE & CLOSE', darkLightBlueColor, false),
     ],
   );
 }
 
-bottomComponents(VoidCallback onClick) {
+bottomComponents(VoidCallback onClick, VoidCallback clickViewPreviousInspection) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
     width: 100.w,
@@ -540,44 +627,244 @@ bottomComponents(VoidCallback onClick) {
         numberWidget(),
         sizedBox(3.h),
         bottomRow(Icons.replay_circle_filled, 'View Previous Inspection',
-            Color(0XFF4A4A4A)),
+            Color(0XFF4A4A4A), clickViewPreviousInspection),
         Divider(
           thickness: 1,
         ),
-        bottomRow(Icons.location_on_outlined, 'Location', Color(0XFF4A4A4A)),
+        bottomRow(Icons.location_on_outlined, 'Location', Color(0XFF4A4A4A),() {
+          
+        }),
         Divider(
           thickness: 1,
         ),
-        bottomRow(Icons.copy, 'Save as template', Color(0XFF4A4A4A)),
+        bottomRow(Icons.copy, 'Save as template', Color(0XFF4A4A4A),() {
+          
+        }),
         Divider(
           thickness: 1,
         ),
         bottomRow(
-            Icons.announcement_outlined, 'View Details', Color(0XFF4A4A4A)),
+            Icons.announcement_outlined, 'View Details', Color(0XFF4A4A4A),() {
+              
+            }),
         Divider(
           thickness: 1,
         ),
-        bottomRow(Icons.delete, 'Delete', Colors.red),
+        bottomRow(Icons.delete, 'Delete', Colors.red,() {
+          
+        }),
       ],
     ),
   );
 }
 
-bottomRow(IconData icon, String text, Color color) {
-  return Row(
-    children: [
-      Icon(
-        icon,
-        color: color,
+bottomRow(IconData icon, String text, Color color, VoidCallback onTap) {
+  return InkWell(
+    onTap: onTap,
+    child: Row(
+      children: [
+        Icon(
+          icon,
+          color: color,
+        ),
+        SizedBox(
+          width: 4.w,
+        ),
+        Text(
+          text,
+          style:
+              TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: color),
+        ),
+      ],
+    ),
+  );
+}
+
+appBarAction(VoidCallback tapFilter) {
+  return [
+    IconButton(onPressed: tapFilter, icon: Image.asset(drawerImage)),
+    IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+  ];
+}
+
+actionBottomComponent() {
+  List dropDownList = ['Main Window', 'Sub Window', 'Front Window'];
+  List statusList = ['Compleated', 'Draft', 'Scheduled'];
+  List selectedList = [];
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    width: 100.w,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bottomTitle('Filter bt Status'),
+        sizedBox(1.h),
+        Row(
+          children: [
+            actionBottomContainer('Compleated'),
+            SizedBox(
+              width: 3.w,
+            ),
+            actionBottomContainer('Draft'),
+            SizedBox(
+              width: 3.w,
+            ),
+            actionBottomContainer('Scheduled'),
+          ],
+        ),
+        sizedBox(3.h),
+        bottomTitle('Sort by Name'),
+        sizedBox(1.h),
+        Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            actionBottomContainer('Descending'),
+            SizedBox(
+              width: 3.w,
+            ),
+            actionBottomContainer('Ascending'),
+          ],
+        ),
+        sizedBox(3.h),
+        bottomTitle('Sort by Type'),
+        sizedBox(1.h),
+        SizedBox(
+          // height: 120,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              typeConTainer('Doors'),
+              sizedBox(1.h),
+              bottomDropDownIcon(dropDownList),
+            ],
+          ),
+        ),
+        sizedBox(3.h),
+        bottomActionButton('Show result (25)', primaryColor),
+      ],
+    ),
+  );
+}
+
+actionBottomContainer(String text) {
+  return InkWell(
+    onTap: (() {}),
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(21)),
+        color: Color(0XFFC8C8C8).withOpacity(0.48),
       ),
-      SizedBox(
-        width: 4.w,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(
+            Icons.done,
+            size: 14,
+            color: Color(0XFF2C3E50).withOpacity(0.19),
+          ),
+          SizedBox(
+            width: 1.w,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: Color(0XFF0F0F0F).withOpacity(0.51),
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
-      Text(
-        text,
-        style:
-            TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: color),
+    ),
+  );
+}
+
+bottomDropDownIcon(List dropDownList) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(6)),
+      color: Color(0XFFEBEBEB),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+      child: DropdownButton(
+        underline: Container(),
+        items: dropDownList.map<DropdownMenuItem<String>>((value) {
+          return DropdownMenuItem(
+            value: value,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(value),
+            ),
+          );
+        }).toList(),
+        onChanged: (val) {},
+        isExpanded: true,
+        // isDense: true,
+        // value: select,
+        hint: Text(
+          'Windows',
+          style: TextStyle(color: Color(0XFF00295E), fontSize: 14),
+        ),
+        style: TextStyle(color: Color(0XFF00295E), fontSize: 14),
       ),
-    ],
+    ),
+  );
+}
+
+bottomActionButton(String text, Color color) {
+  return ElevatedButton(
+    onPressed: () {},
+    style: ElevatedButton.styleFrom(
+      primary: color,
+      padding: EdgeInsets.symmetric(
+        horizontal: 32.w,
+        vertical: 15,
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+    ),
+    child: Text(
+      text,
+      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+    ),
+  );
+}
+
+typeConTainer(String text) {
+  return Container(
+    width: 20.w,
+    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(21)),
+      color: Color(0XFF505050),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Icon(
+          Icons.close,
+          size: 18,
+          color: Colors.white,
+        ),
+      ],
+    ),
+  );
+}
+
+bottomTitle(String text) {
+  return Text(
+    text,
+    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
   );
 }

@@ -43,6 +43,9 @@ class _HomePageState extends State<HomePage>
 
   final searchController = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
+  tapBackButton() {
+    Get.back();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class _HomePageState extends State<HomePage>
           toolBarHeight: 17.h,
           secondTitle: 'Waste Management',
           isHaveTitle: true,
-          isHomePage: true),
+          isHomePage: true, backTap: tapBackButton,),
       body: Stack(
         children: [
           Container(

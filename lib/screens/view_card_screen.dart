@@ -23,7 +23,7 @@ class _ViewCardScreenState extends State<ViewCardScreen>
   List<Medium> images = [];
 
   clickCameraIcon() async {
-    bool isPermissioned = await promptPermissionSetting();
+    bool isPermissioned = await permissionCamera();
     if (isPermissioned) {
       Get.to(CameraViewScreen(images: images))!.then((value) {
         setState(() {
@@ -35,11 +35,23 @@ class _ViewCardScreenState extends State<ViewCardScreen>
     }
   }
 
+  tapBackButton() {
+    Get.back();
+  }
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     images = [];
+  }
+
+  tapFilter() {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return actionBottomComponent();
+        });
   }
 
   @override
@@ -57,6 +69,8 @@ class _ViewCardScreenState extends State<ViewCardScreen>
         toolBarHeight: 17.h,
         title: 'West Tower seaside bulding',
         secondTitle: 'Ground floor main entrance',
+        backTap: tapBackButton,
+        tapFilter: tapFilter,
       ),
       backgroundColor: scaffoldColor,
       body: Padding(

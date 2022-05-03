@@ -13,6 +13,7 @@ Color yellowColor = Color(0XFFFFF940);
 Color darkGreenColor = Color(0XFF239D00);
 Color darkBrown1Color = Color(0XFF715700);
 Color darkBlueColor = Color(0XFF160056);
+Color darkLightBlueColor = Color(0XFF01299D);
 Color darkBrown2Color = Color(0XFF682A00);
 Color darkPinkColor = Color(0XFFFF2A7A);
 Color orangeColor = Color(0XFFFF4B4B);

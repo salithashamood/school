@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:school/components/appbar_component.dart';
 import 'package:school/components/chat_main_components.dart';
 import 'package:sizer/sizer.dart';
@@ -22,6 +23,10 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
     });
   }
 
+  tapBackButton() {
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +35,7 @@ class _ChatMainScreenState extends State<ChatMainScreen> {
         secondTitle: 'Chat',
         isHaveTitle: false,
         isHomePage: false,
+        backTap: tapBackButton,
       ),
       body: chatTile(),
     );
