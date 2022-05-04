@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school/utils/image.dart';
 import 'package:sizer/sizer.dart';
+import '../components/view_card_components.dart';
+import '../components/view_previous_inspection_components.dart';
 
 class ViewPreviousInspection extends StatefulWidget {
   const ViewPreviousInspection({Key? key}) : super(key: key);
@@ -15,30 +16,34 @@ class _ViewPreviousInspectionState extends State<ViewPreviousInspection> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding:
+              const EdgeInsets.only(top: 24, left: 21, right: 20, bottom: 5),
           child: SizedBox(
             width: 100.w,
             height: 100.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
-                SizedBox(
-                  width: 100.w,
-                  child: Stack(
-                    children: [
-                      Text(
-                        'Door - Glass Wo...',
-                        style: TextStyle(
-                            fontSize: 32, fontWeight: FontWeight.w600),
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Image.asset(drawerCloseButton),
-                      ),
-                    ],
-                  ),
-                ),
+                topStackWidget(),
+                dateWidget(),
+                sizedBox(3.h),
+                topImageWidget(),
+                sizedBox(3.h),
+                middleRowWidget('Work Priority', 'Work'),
+                sizedBox(2.h),
+                middleRowWidget('Repair Cost', '99.99 USD'),
+                sizedBox(2.h),
+                middleRowWidget('Remaining Useful life', 'Useful'),
+                sizedBox(2.h),
+                middleRowWidget('Serverity', 'Servirity'),
+                sizedBox(2.h),
+                middleRowWidget('Exttent', 'Extend'),
+                sizedBox(2.h),
+                descriptionWidget(),
+                sizedBox(2.h),
+                photosWidget(),
+                sizedBox(1.h),
+                bottomButtonWidget(),
+                sizedBox(1.h),
               ],
             ),
           ),

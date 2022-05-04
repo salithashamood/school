@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_gallery/photo_gallery.dart';
+import 'package:school/main.dart';
 import 'package:school/screens/google_map_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../utils/colors.dart';
@@ -10,7 +11,10 @@ topImageIcons(String name, Color color, String icon) {
   return Stack(
     alignment: Alignment.bottomCenter,
     children: [
-      Image.asset(icon),
+      Image.asset(
+        icon,
+        scale: isTablet ? 1.05 : null,
+      ),
       Positioned(
         child: Text(
           name,
@@ -248,26 +252,56 @@ viewCardListView() {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            subtitle: Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: yellowColor,
-                  radius: 5,
-                ),
-                SizedBox(
-                  width: 2.w,
-                ),
-                Text(
-                  'In Progress',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0XFFA7A7A7),
+            subtitle: isTablet
+                ? null
+                : Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: yellowColor,
+                        radius: 5,
+                      ),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Text(
+                        'In Progress',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0XFFA7A7A7),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            trailing: Image.asset(arrowRight, color: Colors.black),
+            trailing: isTablet
+                ? SizedBox(
+                    width: 20.w,
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: yellowColor,
+                              radius: 5,
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(
+                              'In Progress',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0XFFA7A7A7),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Image.asset(arrowRight, color: Colors.black),
+                      ],
+                    ),
+                  )
+                : Image.asset(arrowRight, color: Colors.black),
           ),
         ),
       );
@@ -346,8 +380,7 @@ tabBarColumnItem(
             bottomRightNumberContainer(),
           ],
         ),
-        expandedDetails(isSwitched, visibility, gotoMap, gotoQR, onSwitched,
-            locationController),
+        
       ],
     ),
   );
@@ -385,9 +418,11 @@ expandedDetails(
             defectsDetailsSwitch(isSwitched, onSwitched),
             defectsSwitcheVisibilityWidget(isSwitched),
             sizedBox(2.h),
-            button(),
+            isTablet ? tabletButton() : button(),
             sizedBox(2.h),
-            bottomButton('SAVE & PROCEED', primaryColor, true),
+            isTablet
+                ? Container()
+                : bottomButton('SAVE & PROCEED', primaryColor, true),
             sizedBox(1.h),
           ],
         ),
@@ -589,11 +624,13 @@ bottomButton(String text, Color color, bool isExpanded) {
     style: ElevatedButton.styleFrom(
       primary: color,
       padding: EdgeInsets.symmetric(
-          horizontal: isExpanded
-              ? 28.8.w
-              : text == 'CANCEL'
-                  ? 15.w
-                  : 10.w,
+          horizontal: isTablet
+              ? 8.w
+              : isExpanded
+                  ? 28.8.w
+                  : text == 'CANCEL'
+                      ? 15.w
+                      : 10.w,
           vertical: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
     ),
@@ -614,11 +651,23 @@ button() {
   );
 }
 
-bottomComponents(VoidCallback onClick, VoidCallback clickViewPreviousInspection) {
+tabletButton() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      bottomButton('CANCEL', cancelButtonColor, false),
+      bottomButton('SAVE & CLOSE', darkLightBlueColor, false),
+      bottomButton('SAVE & PROCEED', primaryColor, true),
+    ],
+  );
+}
+
+bottomComponents(
+    VoidCallback onClick, VoidCallback clickViewPreviousInspection) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
     width: 100.w,
-    height: 45.h,
+    height: isTablet ? 35.h : 45.h,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -631,28 +680,21 @@ bottomComponents(VoidCallback onClick, VoidCallback clickViewPreviousInspection)
         Divider(
           thickness: 1,
         ),
-        bottomRow(Icons.location_on_outlined, 'Location', Color(0XFF4A4A4A),() {
-          
-        }),
-        Divider(
-          thickness: 1,
-        ),
-        bottomRow(Icons.copy, 'Save as template', Color(0XFF4A4A4A),() {
-          
-        }),
-        Divider(
-          thickness: 1,
-        ),
         bottomRow(
-            Icons.announcement_outlined, 'View Details', Color(0XFF4A4A4A),() {
-              
-            }),
+            Icons.location_on_outlined, 'Location', Color(0XFF4A4A4A), () {}),
         Divider(
           thickness: 1,
         ),
-        bottomRow(Icons.delete, 'Delete', Colors.red,() {
-          
-        }),
+        bottomRow(Icons.copy, 'Save as template', Color(0XFF4A4A4A), () {}),
+        Divider(
+          thickness: 1,
+        ),
+        bottomRow(Icons.announcement_outlined, 'View Details',
+            Color(0XFF4A4A4A), () {}),
+        Divider(
+          thickness: 1,
+        ),
+        bottomRow(Icons.delete, 'Delete', Colors.red, () {}),
       ],
     ),
   );
@@ -672,8 +714,8 @@ bottomRow(IconData icon, String text, Color color, VoidCallback onTap) {
         ),
         Text(
           text,
-          style:
-              TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: color),
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w600, color: color),
         ),
       ],
     ),
@@ -697,7 +739,7 @@ actionBottomComponent() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        bottomTitle('Filter bt Status'),
+        bottomTitle('Filter by Status'),
         sizedBox(1.h),
         Row(
           children: [
@@ -866,5 +908,277 @@ bottomTitle(String text) {
   return Text(
     text,
     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+  );
+}
+
+tableteCardUI(
+    bool isSelected,
+    bool isExpanded,
+    VoidCallback gotoMap,
+    VoidCallback gotoQR,
+    Function(bool) onSwitched,
+    TextEditingController locationController) {
+  List data = [
+    [
+      {'name': 'Good', 'color': darkGreenColor, 'icon': goodIcon},
+      {'name': 'Fair', 'color': darkBrown1Color, 'icon': fairIcon},
+      {'name': 'Avarage', 'color': darkBlueColor, 'icon': avarageIcon},
+      {'name': 'Repair', 'color': darkBrown2Color, 'icon': repairIcon},
+      {'name': 'Replace', 'color': darkPinkColor, 'icon': replaceIcon},
+    ],
+    [
+      {'name': 'Ok', 'color': darkGreenColor, 'icon': rpOkIcon},
+      {'name': 'Low', 'color': darkBrown1Color, 'icon': rpLowIcon},
+      {'name': 'Avarage', 'color': darkBlueColor, 'icon': rpAvarageIcon},
+      {'name': 'High', 'color': darkBrown2Color, 'icon': rpHighIcon},
+      {'name': 'High', 'color': darkPinkColor, 'icon': rpHigh2Icon},
+    ],
+  ];
+  return SizedBox(
+    width: 100.w,
+    child: IntrinsicWidth(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 48.w,
+                child: tabText('Condition Rating'),
+              ),
+              tabText('Risk Factor'),
+            ],
+          ),
+          sizedBox(1.h),
+          SizedBox(
+            height: 15.h,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IntrinsicWidth(
+                  child: SizedBox(
+                    width: 43.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            tabletImage(data[0][0]['name'], data[0][0]['color'],
+                                data[0][0]['icon']),
+                            tabletImage(data[0][1]['name'], data[0][1]['color'],
+                                data[0][1]['icon']),
+                            tabletImage(data[0][2]['name'], data[0][2]['color'],
+                                data[0][2]['icon']),
+                            tabletImage(data[0][3]['name'], data[0][3]['color'],
+                                data[0][3]['icon']),
+                            tabletImage(data[0][4]['name'], data[0][4]['color'],
+                                data[0][4]['icon']),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            tabletBottomLeft(),
+                            SizedBox(
+                              width: 1.w,
+                            ),
+                            tabletBottomRight(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                VerticalDivider(
+                  thickness: 1.5,
+                  color: Color(0XFF707070).withOpacity(0.2),
+                ),
+                IntrinsicWidth(
+                  child: SizedBox(
+                    width: 43.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            tabletImage(data[1][0]['name'], data[1][0]['color'],
+                                data[1][0]['icon']),
+                            tabletImage(data[1][1]['name'], data[1][1]['color'],
+                                data[1][1]['icon']),
+                            tabletImage(data[1][2]['name'], data[1][2]['color'],
+                                data[1][2]['icon']),
+                            tabletImage(data[1][3]['name'], data[1][3]['color'],
+                                data[1][3]['icon']),
+                            tabletImage(data[1][4]['name'], data[1][4]['color'],
+                                data[1][4]['icon']),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            tabletBottomLeft(),
+                            SizedBox(
+                              width: 1.w,
+                            ),
+                            tabletBottomRight(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          expandedDetails(isSelected, isExpanded, gotoMap, gotoQR, onSwitched,
+              locationController)
+        ],
+      ),
+    ),
+  );
+}
+
+mobileCardUI(
+    TabController tabController,
+    bool isExpanded,
+    VoidCallback gotoMap,
+    VoidCallback gotoQR,
+    bool isSelected,
+    Function(bool) onSwitched,
+    TextEditingController locationController) {
+  return SizedBox(
+    height: isExpanded
+        ? isSelected
+            ? 141.h
+            : 123.h
+        : 23.h,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        tabBar(tabController),
+        Divider(
+          color: greyColor,
+          thickness: 0.5,
+        ),
+        tabBarView(tabController, isExpanded, gotoMap, gotoQR, isSelected,
+            onSwitched, locationController),
+        expandedDetails(isSelected, isExpanded, gotoMap, gotoQR, onSwitched,
+            locationController),
+      ],
+    ),
+  );
+}
+
+tabletImage(String name, Color color, String icon) {
+  return Stack(
+    alignment: Alignment.bottomCenter,
+    children: [
+      Container(
+        height: 5.5.h,
+        width: 5.5.h,
+        child: Image.asset(
+          icon,
+          fit: BoxFit.contain,
+        ),
+      ),
+      Positioned(
+        child: Text(
+          name,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 10, color: color),
+        ),
+        bottom: 8,
+      ),
+    ],
+  );
+}
+
+tabletBottomLeft() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 15),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        color: Color(0XFFDEEFFF).withOpacity(0.51),
+      ),
+      height: 6.h,
+      width: 23.w,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              decoration: BoxDecoration(border: Border.all(width: 0.1)),
+              child: Image.asset(backwardIcon),
+            ),
+            Text(
+              'Number',
+              style: TextStyle(
+                  color: primaryTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            Container(
+              decoration: BoxDecoration(border: Border.all(width: 0.1)),
+              child: Image.asset(forwardIcon),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+tabletBottomRight() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 15),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        color: Color(0XFFEEF2F5).withOpacity(0.75),
+      ),
+      height: 6.h,
+      width: 19.w,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            decoration: BoxDecoration(border: Border.all(width: 0.1)),
+            child: Image.asset(minusIcon),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 1, bottom: 1),
+            child: SizedBox(
+              width: 5.w,
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
+                  hintText: '00',
+                ),
+                initialValue: '00',
+                keyboardType: TextInputType.number,
+                style: TextStyle(
+                    color: primaryTextColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(border: Border.all(width: 0.1)),
+            child: Image.asset(plusIcon),
+          ),
+        ],
+      ),
+    ),
   );
 }

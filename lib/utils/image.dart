@@ -44,6 +44,7 @@ String goodSelectedIcon = 'assets/images/cr_good_selected_icon.png';
 
 String fairIcon = 'assets/images/cr_fair_unselected_icon.png';
 String fairSelectedIcon = 'assets/images/cr_fair_selected_icon.png';
+String fairSelectedTabletIcon = 'assets/images/cr_fair_selected_icon_tablet.png';
 
 String avarageIcon = 'assets/images/cr_avarage_unselected_icon.png';
 String avarageSelectedIcon = 'assets/images/cr_avarage_selected_icon.png';
@@ -56,6 +57,7 @@ String rpLowSelectedIcon = 'assets/images/rp_low_selected_icon.png';
 
 String rpHigh2Icon = 'assets/images/rp_high2_unselected_icon.png';
 String rpHigh2SelectedIcon = 'assets/images/rp_high2_selected_icon.png';
+String rpHigh2SelectedTabletIcon = 'assets/images/rp_high2_selected_icon_tablet.png';
 
 String rpHighIcon = 'assets/images/rp_high_unselected_icon.png';
 String rpHighSelectedIcon = 'assets/images/rp_high_selected_icon.png';
@@ -69,5 +71,10 @@ String plusIcon = 'assets/images/quantity_plus_icon.png';
 String minusIcon = 'assets/images/quantity_minus_icon.png';
 String forwardIcon = 'assets/images/forward_icon.png';
 String backwardIcon = 'assets/images/backward_icon.png';
+
+
+
+String locationIcon = 'assets/images/edit_pin.png';
+String calenderIcon = 'assets/images/calender.png';
 
 

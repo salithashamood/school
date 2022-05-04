@@ -69,20 +69,26 @@ class _DrawerComponentState extends State<DrawerComponent> {
                     child: SizedBox(
                       height: 5.h,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.asset(preLoadIcon),
-                          SizedBox(
-                            width: 2.w,
+                          Row(
+                            children: [
+                              Image.asset(preLoadIcon),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              const Text(
+                                'Pre - Load Previous Data',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.blue),
+                              ),
+                            ],
                           ),
-                          const Text(
-                            'Pre - Load Previous Data',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.blue),
-                          ),
-                          SizedBox(
-                            width: 15.w,
-                          ),
+
+                          // SizedBox(
+                          //   width: 15.w,
+                          // ),
                           Switch(
                             value: isSwitched,
                             onChanged: (v) {

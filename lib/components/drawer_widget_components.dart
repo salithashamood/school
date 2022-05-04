@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school/main.dart';
 import 'package:school/utils/colors.dart';
 import 'package:sizer/sizer.dart';
 
@@ -102,8 +103,8 @@ accountDetails(String fName, String lName) {
                     ),
                     Container(
                       width: 35.w,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 5, horizontal: isTablet ? 45 : 10),
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius:
@@ -135,8 +136,8 @@ accountDetails(String fName, String lName) {
                 width: 1.w,
               ),
               Container(
-                child: const CircleAvatar(
-                  radius: 30,
+                child: CircleAvatar(
+                  radius: 5.h,
                   child: Icon(
                     Icons.person,
                     size: 50,
@@ -270,8 +271,8 @@ box(VoidCallback onTap, String text, Color textColor, containerColor,
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      height: 20.h,
-      width: 20.h,
+      height: isTablet ? 25.h : 20.h,
+      width: isTablet ? 25.h : 20.h,
       padding: const EdgeInsets.only(left: 8, top: 5),
       decoration: BoxDecoration(
         color: containerColor,

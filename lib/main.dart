@@ -17,6 +17,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+bool isTablet = false;
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
+        isTablet = SizerUtil.deviceType == DeviceType.tablet;
         return GetMaterialApp(
           initialBinding: Binding(),
           debugShowCheckedModeBanner: false,

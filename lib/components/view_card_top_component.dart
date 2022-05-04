@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:school/components/view_card_components.dart';
 import 'package:school/controllers/permission_controller.dart';
+import 'package:school/main.dart';
 import 'package:school/screens/qr_view_screen.dart';
 import 'package:school/screens/view_previous_inspection._screen.dart';
 import 'package:sizer/sizer.dart';
@@ -52,9 +53,11 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
   gotoMap() async {
     bool isPermissioned = await premissionLocation();
     if (isPermissioned) {
-      Get.to(GoogleMapScreen())!.then((value) {
-        if (value[0] == null) {
-        } else {
+      Get.to(GoogleMapScreen(
+        currentPosition: location,
+      ))!
+          .then((value) {
+        if (value[0] != null) {
           setState(() {
             location = value[0];
             double latitiude = location!.latitude;
@@ -101,11 +104,17 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
         borderRadius: BorderRadius.circular(14),
       ),
       child: Container(
-        height: isExpanded
-            ? isSelected
-                ? 147.h
-                : 130.h
-            : 30.h,
+        height: isTablet
+            ? isExpanded
+                ? isSelected
+                    ? 110.h
+                    : 96.h
+                : 24.h
+            : isExpanded
+                ? isSelected
+                    ? 148.h
+                    : 130.h
+                : 30.h,
         margin: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,16 +136,14 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
                 ),
               ],
             ),
-            tabBar(widget.tabController),
-            Divider(
-              color: greyColor,
-              thickness: 0.5,
-            ),
-            tabBarView(widget.tabController, isExpanded, gotoMap, gotoQR,
-                isSelected, onSwitched, locationController),
+            isTablet ? tableteCardUI(isSelected, isExpanded, gotoMap, gotoQR, onSwitched,
+                locationController) : mobileCardUI(widget.tabController, isExpanded, gotoMap, gotoQR,
+              isSelected, onSwitched, locationController),
           ],
         ),
       ),
     );
   }
+
+  
 }

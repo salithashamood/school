@@ -5,10 +5,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:school/components/appbar_component.dart';
+import 'package:school/utils/image.dart';
 import 'package:sizer/sizer.dart';
 
 class GoogleMapScreen extends StatefulWidget {
-  const GoogleMapScreen({Key? key}) : super(key: key);
+  final LatLng? currentPosition;
+  const GoogleMapScreen({Key? key, this.currentPosition}) : super(key: key);
 
   @override
   State<GoogleMapScreen> createState() => _GoogleMapScreenState();
@@ -19,6 +21,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   double? longitude;
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> _marker = [];
+  Set<Circle> circles = Set();
+  bool isSelected = false;
 
   LatLng? _location;
   LatLng? selectedLatLng;
@@ -28,22 +32,44 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
 
   getCurrentLocation() async {
-    Position currentLocation = await Geolocator.getCurrentPosition();
+    Position currentLocation = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     setState(() {
       latitude = currentLocation.latitude;
       longitude = currentLocation.longitude;
       _location = LatLng(latitude!, longitude!);
+      circles = {
+        Circle(
+            circleId: const CircleId('location'),
+            center: _location!,
+            radius: 500,
+            strokeWidth: 0,
+            fillColor: Colors.blue.withOpacity(0.20)),
+      };
     });
+    if (widget.currentPosition != null) {
+      setState(() {
+        _marker.add(
+          Marker(
+            markerId: MarkerId(widget.currentPosition.toString()),
+            position: widget.currentPosition!,
+            infoWindow: InfoWindow(title: 'Select Location'),
+          ),
+        );
+      });
+    }
   }
 
   onLongPress(LatLng tappedPont) {
     setState(() {
+      isSelected = true;
       _marker = [];
       selectedLatLng = tappedPont;
       _marker.add(
         Marker(
           markerId: MarkerId(tappedPont.toString()),
           position: tappedPont,
+          infoWindow: InfoWindow(title: 'Select Location'),
         ),
       );
     });
@@ -56,14 +82,14 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
 
   tapBackButton() {
-    Get.back(result: [selectedLatLng]);
+    Get.back(result: [selectedLatLng.isBlank! ? null : selectedLatLng]);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.back(result: [selectedLatLng]);
+        Get.back(result: [selectedLatLng.isBlank! ? null : selectedLatLng]);
         return true;
       },
       child: Scaffold(
@@ -76,20 +102,71 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           backTap: tapBackButton,
         ),
         body: _location != null
-            ? GoogleMap(
-                mapType: MapType.hybrid,
-                markers: Set.from(_marker),
-                onLongPress: onLongPress,
-                buildingsEnabled: true,
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: _location!,
-                  zoom: 15,
-                ),
+            ? Stack(
+                children: [
+                  GoogleMap(
+                    circles: circles,
+                    // mapType: MapType.hybrid,
+                    markers: Set.from(_marker),
+                    onLongPress: onLongPress,
+                    buildingsEnabled: true,
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: _location!,
+                      zoom: 13,
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 25,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7, horizontal: 19),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(18)),
+                          color: Color(0XFF010101).withOpacity(0.48)),
+                      child: isSelected
+                          ? buttonItem('Done', false)
+                          : buttonItem('Edit', true),
+                    ),
+                  ),
+                ],
               )
             : Center(
                 child: CircularProgressIndicator(),
               ),
+      ),
+    );
+  }
+
+  clickDone() {
+    Get.back(result: [selectedLatLng]);
+  }
+
+  buttonItem(String text, bool isIcon) {
+    return InkWell(
+      onTap: !isIcon ? clickDone : null,
+      child: Row(
+        children: [
+          isIcon
+              ? Image.asset(
+                  locationIcon,
+                  scale: 4,
+                )
+              : const Icon(
+                  Icons.done,
+                  size: 18,
+                  color: Colors.white,
+                ),
+          SizedBox(
+            width: 1.w,
+          ),
+          Text(
+            text,
+            style: const TextStyle(
+                fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+          ),
+        ],
       ),
     );
   }
