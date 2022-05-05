@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_gallery/photo_gallery.dart';
+import 'package:rounded_text_field/rounded_text_field.dart';
 import 'package:school/controllers/filter_controller.dart';
 import 'package:school/main.dart';
 import 'package:school/screens/google_map_screen.dart';
@@ -403,7 +404,8 @@ expandedDetails(
           children: [
             descriptionField(),
             sizedBox(2.h),
-            additionalCommentsField(),
+            RoundedTextField(hintText: 'Additional Comments'),
+            // additionalCommentsField(),
             sizedBox(2.h),
             rfidField(gotoQR),
             sizedBox(2.h),
@@ -411,7 +413,8 @@ expandedDetails(
             sizedBox(3.h),
             maintenanceDetailsText(),
             sizedBox(2.h),
-            workField(),
+            RoundedTextField(hintText: 'Work'),
+            // workField(),
             sizedBox(2.h),
             dradeField(),
             sizedBox(1.h),
@@ -437,7 +440,8 @@ defectsSwitcheVisibilityWidget(bool isSwitched) {
     child: Column(
       children: [
         sizedBox(1.h),
-        workField(),
+        RoundedTextField(hintText: 'Work'),
+        // workField(),
         sizedBox(2.h),
         dradeField(),
       ],
@@ -511,10 +515,11 @@ dradeField() {
   List dropDownList = ['A', 'B', 'C', 'D'];
   return Row(
     children: [
-      Expanded(
-        child: TextFormField(
-          decoration: textFieldInputDecoration('99.00'),
-        ),
+      const Expanded(
+        child: RoundedTextField(hintText: '99.00'),
+        // child: TextFormField(
+        //   decoration: textFieldInputDecoration('99.00'),
+        // ),
       ),
       SizedBox(
         width: 4.w,
@@ -1096,8 +1101,8 @@ mobileCardUI(
   return SizedBox(
     height: isExpanded
         ? isSelected
-            ? 141.h
-            : 123.h
+            ? 135.h
+            : 118.h
         : 23.h,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

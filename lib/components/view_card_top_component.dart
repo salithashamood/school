@@ -113,8 +113,8 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
                 : 24.h
             : isExpanded
                 ? isSelected
-                    ? 148.h
-                    : 130.h
+                    ? 141.h
+                    : 125.h
                 : 30.h,
         margin: const EdgeInsets.all(10),
         child: Column(

@@ -429,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
+  rounded_text_field:
+    dependency: "direct main"
+    description:
+      path: "packages/rounded_text_field"
+      relative: true
+    source: path
+    version: "0.0.1"
   sizer:
     dependency: "direct main"
     description:
