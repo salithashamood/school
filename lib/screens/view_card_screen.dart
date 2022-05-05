@@ -4,6 +4,7 @@ import 'package:photo_gallery/photo_gallery.dart';
 import 'package:school/components/appbar_component.dart';
 import 'package:school/components/view_card_components.dart';
 import 'package:school/components/view_card_top_component.dart';
+import 'package:school/controllers/filter_controller.dart';
 import 'package:school/screens/camera_view_screen.dart';
 import 'package:school/utils/colors.dart';
 import 'package:sizer/sizer.dart';
@@ -21,6 +22,7 @@ class _ViewCardScreenState extends State<ViewCardScreen>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   List<Medium> images = [];
+  // List filterSelectedList = [];
 
   clickCameraIcon() async {
     bool isPermissioned = await permissionCamera();
@@ -46,13 +48,30 @@ class _ViewCardScreenState extends State<ViewCardScreen>
     images = [];
   }
 
-  tapFilter() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return actionBottomComponent();
-        });
+  tapFilter() async {
+    Get.bottomSheet(
+      GetBuilder<FilterController>(
+        builder: (controller) {
+          return StatefulBuilder(
+            builder: (context, setsState) {
+              return Container(
+                child: actionBottomComponent(setsState, controller),
+              );
+            },
+          );
+        },
+      ),
+      backgroundColor: Colors.white,
+    );
   }
+
+  // clickFilterItem(List statusList, int index) {
+  //   if (filterSelectedList.contains(statusList[index])) {
+  //     filterSelectedList.remove(statusList[index]);
+  //   } else {
+  //     filterSelectedList.add(statusList[index]);
+  //   }
+  // }
 
   @override
   void dispose() {

@@ -10,7 +10,10 @@ import 'package:sizer/sizer.dart';
 
 class GoogleMapScreen extends StatefulWidget {
   final LatLng? currentPosition;
-  const GoogleMapScreen({Key? key, this.currentPosition}) : super(key: key);
+  final bool isSelected;
+  const GoogleMapScreen(
+      {Key? key, this.currentPosition, required this.isSelected})
+      : super(key: key);
 
   @override
   State<GoogleMapScreen> createState() => _GoogleMapScreenState();
@@ -23,6 +26,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   List<Marker> _marker = [];
   Set<Circle> circles = Set();
   bool isSelected = false;
+  bool isCanEdit = false;
+  bool isSavePosition = false;
+  bool isClick = false;
 
   LatLng? _location;
   LatLng? selectedLatLng;
@@ -38,6 +44,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       latitude = currentLocation.latitude;
       longitude = currentLocation.longitude;
       _location = LatLng(latitude!, longitude!);
+      isSavePosition = widget.isSelected;
       circles = {
         Circle(
             circleId: const CircleId('location'),
@@ -62,7 +69,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   onLongPress(LatLng tappedPont) {
     setState(() {
+      isSavePosition = true;
       isSelected = true;
+      isClick = false;
       _marker = [];
       selectedLatLng = tappedPont;
       _marker.add(
@@ -82,14 +91,14 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   }
 
   tapBackButton() {
-    Get.back(result: [selectedLatLng.isBlank! ? null : selectedLatLng]);
+    Get.back(result: [null]);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.back(result: [selectedLatLng.isBlank! ? null : selectedLatLng]);
+        Get.back(result: [null]);
         return true;
       },
       child: Scaffold(
@@ -108,7 +117,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                     circles: circles,
                     // mapType: MapType.hybrid,
                     markers: Set.from(_marker),
-                    onLongPress: onLongPress,
+                    onLongPress: isCanEdit ? onLongPress : null,
                     buildingsEnabled: true,
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
@@ -125,9 +134,15 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(18)),
                           color: Color(0XFF010101).withOpacity(0.48)),
-                      child: isSelected
-                          ? buttonItem('Done', false)
-                          : buttonItem('Edit', true),
+                      child: isSavePosition
+                          ? isSelected
+                              ? buttonItem('Done', false)
+                              : isClick
+                                  ? textWidget()
+                                  : buttonItem('Edit', true)
+                          : isClick
+                              ? textWidget()
+                              : buttonItem('Add', true),
                     ),
                   ),
                 ],
@@ -139,13 +154,26 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     );
   }
 
+  textWidget() {
+    return Text('Select Position',
+        style: const TextStyle(
+            fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white));
+  }
+
   clickDone() {
     Get.back(result: [selectedLatLng]);
   }
 
+  editButton() {
+    setState(() {
+      isClick = true;
+      isCanEdit = true;
+    });
+  }
+
   buttonItem(String text, bool isIcon) {
     return InkWell(
-      onTap: !isIcon ? clickDone : null,
+      onTap: !isIcon ? clickDone : editButton,
       child: Row(
         children: [
           isIcon

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_gallery/photo_gallery.dart';
+import 'package:school/controllers/filter_controller.dart';
 import 'package:school/main.dart';
 import 'package:school/screens/google_map_screen.dart';
 import 'package:sizer/sizer.dart';
@@ -380,7 +381,6 @@ tabBarColumnItem(
             bottomRightNumberContainer(),
           ],
         ),
-        
       ],
     ),
   );
@@ -729,66 +729,6 @@ appBarAction(VoidCallback tapFilter) {
   ];
 }
 
-actionBottomComponent() {
-  List dropDownList = ['Main Window', 'Sub Window', 'Front Window'];
-  List statusList = ['Compleated', 'Draft', 'Scheduled'];
-  List selectedList = [];
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-    width: 100.w,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        bottomTitle('Filter by Status'),
-        sizedBox(1.h),
-        Row(
-          children: [
-            actionBottomContainer('Compleated'),
-            SizedBox(
-              width: 3.w,
-            ),
-            actionBottomContainer('Draft'),
-            SizedBox(
-              width: 3.w,
-            ),
-            actionBottomContainer('Scheduled'),
-          ],
-        ),
-        sizedBox(3.h),
-        bottomTitle('Sort by Name'),
-        sizedBox(1.h),
-        Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            actionBottomContainer('Descending'),
-            SizedBox(
-              width: 3.w,
-            ),
-            actionBottomContainer('Ascending'),
-          ],
-        ),
-        sizedBox(3.h),
-        bottomTitle('Sort by Type'),
-        sizedBox(1.h),
-        SizedBox(
-          // height: 120,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              typeConTainer('Doors'),
-              sizedBox(1.h),
-              bottomDropDownIcon(dropDownList),
-            ],
-          ),
-        ),
-        sizedBox(3.h),
-        bottomActionButton('Show result (25)', primaryColor),
-      ],
-    ),
-  );
-}
-
 actionBottomContainer(String text) {
   return InkWell(
     onTap: (() {}),
@@ -899,6 +839,111 @@ typeConTainer(String text) {
           size: 18,
           color: Colors.white,
         ),
+      ],
+    ),
+  );
+}
+
+actionBottomComponent(Function setsState, FilterController controller) {
+  List dropDownList = ['Main Window', 'Sub Window', 'Front Window'];
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    width: 100.w,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bottomTitle('Filter by Status'),
+        sizedBox(1.h),
+        SizedBox(
+          height: 5.h,
+          child: ListView.builder(
+            itemCount: controller.statusList.length,
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                child: InkWell(
+                  onTap: (() {
+                    controller.clickFilterItem(index);
+                    setsState(() {});
+                  }),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(21)),
+                      color: (controller.selectList.value.isNotEmpty &&
+                              controller.selectList.value
+                                  .contains(controller.statusList[index]))
+                          ? Color(0XFF505050)
+                          : Color(0XFFC8C8C8).withOpacity(0.48),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.done,
+                          size: 14,
+                          color: (controller.selectList.value.isNotEmpty &&
+                                  controller.selectList.value
+                                      .contains(controller.statusList[index]))
+                              ? Colors.white
+                              : Color(0XFF2C3E50).withOpacity(0.19),
+                        ),
+                        SizedBox(
+                          width: 1.w,
+                        ),
+                        Text(
+                          controller.statusList[index],
+                          style: TextStyle(
+                            color: (controller.selectList.value.isNotEmpty &&
+                                    controller.selectList.value
+                                        .contains(controller.statusList[index]))
+                                ? Colors.white
+                                : Color(0XFF0F0F0F).withOpacity(0.51),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        sizedBox(3.h),
+        bottomTitle('Sort by Name'),
+        sizedBox(1.h),
+        Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            actionBottomContainer('Descending'),
+            SizedBox(
+              width: 3.w,
+            ),
+            actionBottomContainer('Ascending'),
+          ],
+        ),
+        sizedBox(3.h),
+        bottomTitle('Sort by Type'),
+        sizedBox(1.h),
+        SizedBox(
+          // height: 120,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              typeConTainer('Doors'),
+              sizedBox(1.h),
+              bottomDropDownIcon(dropDownList),
+            ],
+          ),
+        ),
+        sizedBox(3.h),
+        bottomActionButton('Show result (25)', primaryColor),
       ],
     ),
   );

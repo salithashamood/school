@@ -55,6 +55,7 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
     if (isPermissioned) {
       Get.to(GoogleMapScreen(
         currentPosition: location,
+        isSelected: location == null ? false : true,
       ))!
           .then((value) {
         if (value[0] != null) {
@@ -136,14 +137,14 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
                 ),
               ],
             ),
-            isTablet ? tableteCardUI(isSelected, isExpanded, gotoMap, gotoQR, onSwitched,
-                locationController) : mobileCardUI(widget.tabController, isExpanded, gotoMap, gotoQR,
-              isSelected, onSwitched, locationController),
+            isTablet
+                ? tableteCardUI(isSelected, isExpanded, gotoMap, gotoQR,
+                    onSwitched, locationController)
+                : mobileCardUI(widget.tabController, isExpanded, gotoMap,
+                    gotoQR, isSelected, onSwitched, locationController),
           ],
         ),
       ),
     );
   }
-
-  
 }
