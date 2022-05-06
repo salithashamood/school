@@ -315,7 +315,7 @@ viewCardListView() {
 tabBarView(
     TabController _tabController,
     bool visibility,
-    VoidCallback gotoMap,
+    // VoidCallback gotoMap,
     VoidCallback gotoQR,
     bool isSwitched,
     Function(bool) onSwitched,
@@ -340,9 +340,9 @@ tabBarView(
     child: TabBarView(
       controller: _tabController,
       children: [
-        tabBarColumnItem(data, 0, visibility, gotoMap, gotoQR, isSwitched,
+        tabBarColumnItem(data, 0, visibility, gotoQR, isSwitched,
             onSwitched, locationController),
-        tabBarColumnItem(data, 1, visibility, gotoMap, gotoQR, isSwitched,
+        tabBarColumnItem(data, 1, visibility, gotoQR, isSwitched,
             onSwitched, locationController),
       ],
     ),
@@ -353,7 +353,7 @@ tabBarColumnItem(
     List data,
     int index,
     bool visibility,
-    VoidCallback gotoMap,
+    // VoidCallback gotoMap,
     VoidCallback gotoQR,
     bool isSwitched,
     Function(bool) onSwitched,
@@ -391,7 +391,7 @@ tabBarColumnItem(
 expandedDetails(
     bool isSwitched,
     bool visibility,
-    VoidCallback gotoMap,
+    // VoidCallback gotoMap,
     VoidCallback gotoQR,
     Function(bool) onSwitched,
     TextEditingController locationController) {
@@ -973,7 +973,7 @@ bottomTitle(String text) {
 tableteCardUI(
     bool isSelected,
     bool isExpanded,
-    VoidCallback gotoMap,
+    // VoidCallback gotoMap,
     VoidCallback gotoQR,
     Function(bool) onSwitched,
     TextEditingController locationController) {
@@ -1091,7 +1091,7 @@ tableteCardUI(
               ],
             ),
           ),
-          expandedDetails(isSelected, isExpanded, gotoMap, gotoQR, onSwitched,
+          expandedDetails(isSelected, isExpanded, gotoQR, onSwitched,
               locationController)
         ],
       ),
@@ -1102,7 +1102,7 @@ tableteCardUI(
 mobileCardUI(
     TabController tabController,
     bool isExpanded,
-    VoidCallback gotoMap,
+    // VoidCallback gotoMap,
     VoidCallback gotoQR,
     bool isSelected,
     Function(bool) onSwitched,
@@ -1121,9 +1121,9 @@ mobileCardUI(
           color: greyColor,
           thickness: 0.5,
         ),
-        tabBarView(tabController, isExpanded, gotoMap, gotoQR, isSelected,
+        tabBarView(tabController, isExpanded, gotoQR, isSelected,
             onSwitched, locationController),
-        expandedDetails(isSelected, isExpanded, gotoMap, gotoQR, onSwitched,
+        expandedDetails(isSelected, isExpanded, gotoQR, onSwitched,
             locationController),
       ],
     ),

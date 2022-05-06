@@ -50,27 +50,27 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
     return isSelected;
   }
 
-  gotoMap() async {
-    bool isPermissioned = await premissionLocation();
-    if (isPermissioned) {
-      Get.to(GoogleMapScreen(
-        currentPosition: location,
-        isSelected: location == null ? false : true,
-      ))!
-          .then((value) {
-        if (value[0] != null) {
-          setState(() {
-            location = value[0];
-            double latitiude = location!.latitude;
-            double longitude = location!.longitude;
-            locationController.text = '$latitiude , $longitude';
-          });
-        }
-      });
-    } else {
-      Get.snackbar('Request Permission', 'Can\'t move map without permission');
-    }
-  }
+  // gotoMap() async {
+  //   bool isPermissioned = await premissionLocation();
+  //   if (isPermissioned) {
+  //     Get.to(GoogleMapScreen(
+  //       currentPosition: location,
+  //       isSelected: location == null ? false : true,
+  //     ))!
+  //         .then((value) {
+  //       if (value[0] != null) {
+  //         setState(() {
+  //           location = value[0];
+  //           double latitiude = location!.latitude;
+  //           double longitude = location!.longitude;
+  //           locationController.text = '$latitiude , $longitude';
+  //         });
+  //       }
+  //     });
+  //   } else {
+  //     Get.snackbar('Request Permission', 'Can\'t move map without permission');
+  //   }
+  // }
 
   gotoQR() async {
     bool isPermissioned = await permissionCamera();
@@ -138,9 +138,9 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
               ],
             ),
             isTablet
-                ? tableteCardUI(isSelected, isExpanded, gotoMap, gotoQR,
+                ? tableteCardUI(isSelected, isExpanded, gotoQR,
                     onSwitched, locationController)
-                : mobileCardUI(widget.tabController, isExpanded, gotoMap,
+                : mobileCardUI(widget.tabController, isExpanded, 
                     gotoQR, isSelected, onSwitched, locationController),
           ],
         ),
