@@ -48,6 +48,9 @@ dependencies:
   geolocator: ^8.2.0
   rounded_text_field:
     path: packages/rounded_text_field
+  # map_with_location:
+  #   path: packages/map_with_location
+  map_with_location: ^0.0.1
 
 
 dev_dependencies:

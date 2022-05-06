@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:map_with_location/map_with_location.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:rounded_text_field/rounded_text_field.dart';
 import 'package:school/controllers/filter_controller.dart';
@@ -409,7 +410,15 @@ expandedDetails(
             sizedBox(2.h),
             rfidField(gotoQR),
             sizedBox(2.h),
-            mapField(gotoMap, locationController),
+            MapTextField(
+              textEditController: locationController,
+              icon: Icons.map,
+              hintText: 'Location',
+              appBarToolBarHeight: 10.h,
+              appBarTitle: 'Map',
+              image: locationIcon,
+            ),
+            // mapField(gotoMap, locationController),
             sizedBox(3.h),
             maintenanceDetailsText(),
             sizedBox(2.h),
@@ -878,8 +887,8 @@ actionBottomComponent(Function setsState, FilterController controller) {
                         const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(21)),
-                      color: (controller.selectList.value.isNotEmpty &&
-                              controller.selectList.value
+                      color: (controller.selectList.isNotEmpty &&
+                              controller.selectList
                                   .contains(controller.statusList[index]))
                           ? Color(0XFF505050)
                           : Color(0XFFC8C8C8).withOpacity(0.48),
@@ -890,8 +899,8 @@ actionBottomComponent(Function setsState, FilterController controller) {
                         Icon(
                           Icons.done,
                           size: 14,
-                          color: (controller.selectList.value.isNotEmpty &&
-                                  controller.selectList.value
+                          color: (controller.selectList.isNotEmpty &&
+                                  controller.selectList
                                       .contains(controller.statusList[index]))
                               ? Colors.white
                               : Color(0XFF2C3E50).withOpacity(0.19),
@@ -902,8 +911,8 @@ actionBottomComponent(Function setsState, FilterController controller) {
                         Text(
                           controller.statusList[index],
                           style: TextStyle(
-                            color: (controller.selectList.value.isNotEmpty &&
-                                    controller.selectList.value
+                            color: (controller.selectList.isNotEmpty &&
+                                    controller.selectList
                                         .contains(controller.statusList[index]))
                                 ? Colors.white
                                 : Color(0XFF0F0F0F).withOpacity(0.51),
@@ -1101,8 +1110,8 @@ mobileCardUI(
   return SizedBox(
     height: isExpanded
         ? isSelected
-            ? 135.h
-            : 118.h
+            ? 142.h
+            : 125.h
         : 23.h,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

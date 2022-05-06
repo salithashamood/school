@@ -65,14 +65,6 @@ class _ViewCardScreenState extends State<ViewCardScreen>
     );
   }
 
-  // clickFilterItem(List statusList, int index) {
-  //   if (filterSelectedList.contains(statusList[index])) {
-  //     filterSelectedList.remove(statusList[index]);
-  //   } else {
-  //     filterSelectedList.add(statusList[index]);
-  //   }
-  // }
-
   @override
   void dispose() {
     _tabController!.dispose();
