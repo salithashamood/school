@@ -50,12 +50,18 @@ dependencies:
     path: packages/rounded_text_field
   # map_with_location:
   #   path: packages/map_with_location
-  map_with_location: ^0.0.1
+  # map_with_location: ^0.0.1
+  map_with_location:
+    git:
+      url: https://github.com/salithashamood/map_with_location.git
+      ref: master # branch name
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: 
+  mockito: ^5.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

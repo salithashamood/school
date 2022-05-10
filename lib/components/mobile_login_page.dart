@@ -50,12 +50,13 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       child: Container(
                         color: Colors.transparent,
                         child: TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Email can\'t be empty';
-                            }
-                            return null;
-                          },
+                          validator: EmailFieldValidator.validate,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Email can\'t be empty';
+                          //   }
+                          //   return null;
+                          // },
                           controller: _loginController.userName.value,
                           decoration: userNameInputDecoration(),
                         ),
@@ -69,12 +70,13 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       child: Container(
                         color: Colors.transparent,
                         child: TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Password can\'t be empty';
-                            }
-                            return null;
-                          },
+                          validator: PasswordFieldValidator.validate,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Password can\'t be empty';
+                          //   }
+                          //   return null;
+                          // },
                           obscureText: !isVisiblePassword,
                           controller: _loginController.password.value,
                           decoration: InputDecoration(
@@ -139,5 +141,18 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
         ),
       ],
     );
+  }
+}
+
+class EmailFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Email can\'t be empty' : null;
+  }
+}
+
+
+class PasswordFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Password can\'t be empty' : null;
   }
 }

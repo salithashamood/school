@@ -64,7 +64,7 @@ loginButton(double paddin) {
           : () {
               if (_loginController.formkey.value.currentState!.validate()) {
                 if (GetUtils.isEmail(_loginController.userName.value.text)) {
-                  _loginController.logIn();
+                  _loginController.logIn(isTest: false);
                 } else {
                   Get.snackbar(
                       'Not a valid user name', 'Enter valid user name');
