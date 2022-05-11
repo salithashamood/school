@@ -44,6 +44,7 @@ loginButton(double paddin) {
   final _loginController = Get.find<LoginController>();
   return Obx(
     () => ElevatedButton(
+      key: const Key('login'),
       style: ElevatedButton.styleFrom(
         primary: const Color(0XFF2743FF),
         padding: EdgeInsets.symmetric(horizontal: paddin, vertical: 18),

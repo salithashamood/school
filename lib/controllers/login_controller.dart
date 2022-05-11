@@ -6,8 +6,6 @@ import 'package:school/models/user_model.dart';
 import 'package:school/screens/main_home_screen.dart';
 import 'package:school/utils/user_secure_storage.dart';
 
-import '../screens/home_page.dart';
-
 class LoginController extends GetxController {
   var userName = TextEditingController().obs;
   var password = TextEditingController().obs;
