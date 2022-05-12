@@ -15,7 +15,6 @@ class MobileLoginPage extends StatefulWidget {
 
 class _MobileLoginPageState extends State<MobileLoginPage> {
   final _loginController = Get.find<LoginController>();
-  final formkey = GlobalKey<FormState>();
 
   bool isVisiblePassword = false;
   @override
@@ -41,7 +40,6 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
               // ),
               Form(
                 autovalidateMode: AutovalidateMode.always,
-                // key: formkey,
                 key: _loginController.formkey.value,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,8 +50,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       child: Container(
                         color: Colors.transparent,
                         child: TextFormField(
-                          // autovalidateMode: AutovalidateMode.always,
-                          key: const Key('user name'),
+                          key: const Key('user_name'),
                           validator: EmailFieldValidator.validate,
                           // validator: (value) {
                           //   if (value!.isEmpty) {
@@ -74,7 +71,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                       child: Container(
                         color: Colors.transparent,
                         child: TextFormField(
-                          // autovalidateMode: AutovalidateMode.always,
+                          key: const Key('password'),
                           validator: PasswordFieldValidator.validate,
                           // validator: (value) {
                           //   if (value!.isEmpty) {
@@ -134,7 +131,6 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                             //   width: 1.w,
                             // ),
                             loginButton(14.w),
-                            // login(),
                           ],
                         ),
                       ),
@@ -146,33 +142,6 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
           ),
         ),
       ],
-    );
-  }
-
-  login() {
-    return ElevatedButton(
-      key: const Key('login1'),
-      style: ElevatedButton.styleFrom(
-        primary: const Color(0XFF2743FF),
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 18),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      ),
-      child: const Text(
-        'Login',
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      ),
-      onPressed: () {
-        if (formkey.currentState!.validate()) {
-          _loginController.logIn(isTest: false);
-        } 
-        // if (_loginController.formkey.value.currentState!.validate()) {
-        //   if (GetUtils.isEmail(_loginController.userName.value.text)) {
-        //     _loginController.logIn(isTest: false);
-        //   } else {
-        //     Get.snackbar('Not a valid user name', 'Enter valid user name');
-        //   }
-        // }
-      },
     );
   }
 }

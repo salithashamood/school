@@ -40,12 +40,8 @@ class _TabletLoginPageState extends State<TabletLoginPage> {
                   color: Colors.transparent,
                   width: 350,
                   child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Email can\'t be empty';
-                      }
-                      return null;
-                    },
+                    key: const Key('user_name'),
+                    validator: EmailFieldValidator.validate,
                     controller: _loginController.userName.value,
                     decoration: userNameInputDecoration(),
                   ),
@@ -60,12 +56,8 @@ class _TabletLoginPageState extends State<TabletLoginPage> {
                   color: Colors.transparent,
                   width: 350,
                   child: TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Password can\'t be empty';
-                      }
-                      return null;
-                    },
+                    key: const Key('password'),
+                    validator: PasswordFieldValidator.validate,
                     obscureText: !isVisiblePassword,
                     controller: _loginController.password.value,
                     decoration: InputDecoration(
@@ -108,7 +100,7 @@ class _TabletLoginPageState extends State<TabletLoginPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   color: Colors.transparent,
-                  width: 350,
+                  width: 350,  //600
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -126,5 +118,17 @@ class _TabletLoginPageState extends State<TabletLoginPage> {
         ),
       ],
     );
+  }
+}
+
+class EmailFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Email can\'t be empty' : null;
+  }
+}
+
+class PasswordFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Password can\'t be empty' : null;
   }
 }
