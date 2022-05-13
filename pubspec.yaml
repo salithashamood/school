@@ -34,7 +34,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  get: ^4.6.1
+  get: ^4.6.3
   http: ^0.13.4
   flutter_secure_storage: ^5.0.2
   sizer: ^2.0.15
@@ -44,13 +44,17 @@ dependencies:
   permission_handler: ^9.2.0
   gallery_saver: ^2.3.2
   google_maps_flutter: ^2.1.4
-  qr_code_scanner: ^0.7.0
+  # qr_code_scanner: ^0.7.0
   geolocator: ^8.2.0
   rounded_text_field:
     path: packages/rounded_text_field
   # map_with_location:
   #   path: packages/map_with_location
   # map_with_location: ^0.0.1
+  qr_code_scanner:
+    git:
+      url: https://github.com/xeinebiu/qr_code_scanner.git
+      ref: fix_break_changes_platform
   map_with_location:
     git:
       url: https://github.com/salithashamood/map_with_location.git

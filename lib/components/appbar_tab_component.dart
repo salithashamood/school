@@ -24,7 +24,7 @@ class _AppBarTabState extends State<AppBarTab> {
             initialIndex: 0,
             animationDuration: const Duration(milliseconds: 500),
             child: TabBar(
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 3,
               controller: widget.tabController,

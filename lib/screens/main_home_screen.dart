@@ -4,7 +4,6 @@ import 'package:school/screens/chat_main_screen.dart';
 import 'package:school/screens/help_main_screen.dart';
 import 'package:school/screens/home_page.dart';
 import 'package:school/screens/report_main_screen.dart';
-import 'package:school/utils/image.dart';
 
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({Key? key}) : super(key: key);

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:school/binding.dart';
 import 'package:school/screens/camera_view_screen.dart';
-import 'package:school/screens/home_page.dart';
 import 'package:school/screens/main_home_screen.dart';
-import 'package:school/screens/view_card_screen.dart';
 import 'package:school/utils/user_secure_storage.dart';
 import 'package:sizer/sizer.dart';
 
@@ -87,7 +85,7 @@ class _SetScreenState extends State<SetScreen> {
             ),
           )
         : isLogin
-            ? MainHomeScreen()
-            : LoginPage();
+            ? const MainHomeScreen()
+            : const LoginPage();
   }
 }

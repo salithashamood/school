@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:school/components/home_components.dart';
 import 'package:school/components/view_card_components.dart';
 
@@ -70,7 +69,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
           ? appBarLeading(clickDrawer)
           : IconButton(
               onPressed: widget.backTap,
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
             ),
     );
   }

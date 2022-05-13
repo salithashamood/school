@@ -4,8 +4,6 @@ import 'package:school/components/appbar_component.dart';
 import 'package:school/components/help_main_components.dart';
 import 'package:sizer/sizer.dart';
 
-import '../components/home_components.dart';
-import '../utils/colors.dart';
 
 class HelpMainScreen extends StatefulWidget {
   const HelpMainScreen({Key? key}) : super(key: key);

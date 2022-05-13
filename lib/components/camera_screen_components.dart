@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:sizer/sizer.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -28,7 +27,7 @@ cameraView(CameraController? _cameraController, Future<void>? _cameraValue) {
 
 bottomIcon(
     List<Medium> imagesMedia,
-    Set<String> physical_status_selected,
+    Set<String> physicalStatusSelected,
     Function onClick,
     VoidCallback takeImage,
     VoidCallback pressedDone,
@@ -44,7 +43,7 @@ bottomIcon(
         children: [
           Expanded(
             child:
-                photoListView(imagesMedia, physical_status_selected, onClick),
+                photoListView(imagesMedia, physicalStatusSelected, onClick),
           ),
           actionIcon(takeImage, pressedDone, pressedDelete),
           SizedBox(
@@ -56,7 +55,7 @@ bottomIcon(
   );
 }
 
-photoListView(List<Medium> imagesMedia, Set<String> physical_status_selected,
+photoListView(List<Medium> imagesMedia, Set<String> physicalStatusSelected,
     Function onClick) {
   return ListView.builder(
     itemCount: imagesMedia.length,
@@ -64,7 +63,7 @@ photoListView(List<Medium> imagesMedia, Set<String> physical_status_selected,
       if (imagesMedia.isEmpty) {
         return Center(
           child: Container(
-            child: Text('No pictures in Cams album'),
+            child: const Text('No pictures in Cams album'),
           ),
         );
       } else {
@@ -95,11 +94,11 @@ photoListView(List<Medium> imagesMedia, Set<String> physical_status_selected,
                     height: 10.h,
                     width: 10.h,
                     color:
-                        physical_status_selected.contains(imagesMedia[index].id)
+                        physicalStatusSelected.contains(imagesMedia[index].id)
                             ? Colors.white.withOpacity(0.5)
                             : Colors.transparent,
                   ),
-                  physical_status_selected.contains(imagesMedia[index].id)
+                  physicalStatusSelected.contains(imagesMedia[index].id)
                       ? const Positioned(
                           top: 1,
                           right: 3,
@@ -127,7 +126,7 @@ actionIcon(VoidCallback takeImage, VoidCallback pressedDone,
       actionButton('Delete', Colors.deepOrangeAccent, pressedDelete),
       IconButton(
         onPressed: takeImage,
-        icon: Icon(
+        icon: const Icon(
           Icons.camera_alt_outlined,
           size: 30,
         ),

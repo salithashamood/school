@@ -21,7 +21,7 @@ bottomButtonWidget() {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         ),
-        child: Text(
+        child: const Text(
           'PREVIOUS',
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         ),
@@ -34,7 +34,7 @@ bottomButtonWidget() {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
         ),
-        child: Text(
+        child: const Text(
           'NEXT',
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         ),
@@ -49,7 +49,7 @@ photosWidget() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Photos',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -83,7 +83,7 @@ descriptionWidget() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Description',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -92,7 +92,7 @@ descriptionWidget() {
           ),
         ),
         sizedBox(1.h),
-        Flexible(
+        const Flexible(
           child: Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nunc eros, fermentum tincidunt odio ac, congue aliquet eros. Phasellus facilisis, ex id rutrum tincidunt, odio elit vulputate lacus,',
             style: TextStyle(
@@ -146,7 +146,7 @@ dateWidget() {
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
           decoration: BoxDecoration(
             color: yellowColor,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Text(
             'A45878788',
@@ -179,7 +179,7 @@ dateWidget() {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 11,
-                  color: Color(0XFF0F0F0F).withOpacity(0.39),
+                  color: const Color(0XFF0F0F0F).withOpacity(0.39),
                 ),
               )
             ],
@@ -228,7 +228,7 @@ middleRowWidget(String leftName, String rightName) {
     children: [
       Text(
         leftName,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 15,
           color: Color(0XFF989898),
@@ -236,7 +236,7 @@ middleRowWidget(String leftName, String rightName) {
       ),
       Text(
         rightName,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 15,
           color: Color(0XFF1C1C1C),

@@ -4,10 +4,6 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:school/components/camera_screen_components.dart';
-import 'package:school/screens/report_main_screen.dart';
-import 'package:school/utils/image.dart';
-import 'package:sizer/sizer.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 List<CameraDescription>? cameras;
 
@@ -24,14 +20,14 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
   Future<void>? _cameraValue;
   List<Medium> imagesMedia = [];
   List<Medium> selectedImages = [];
-  Set<String> physical_status_selected = Set();
+  Set<String> physical_status_selected = {};
 
   Future<List<Medium>> getImage() async {
     try {
       final List<Album> imagesAlbum =
           await PhotoGallery.listAlbums(mediumType: MediumType.image);
 
-      imagesAlbum.forEach((element) async {
+      for (var element in imagesAlbum) {
         if (element.name == 'Cams') {
           final MediaPage mediaPage = await element.listMedia(newest: true);
           setState(() {
@@ -39,7 +35,7 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
           });
           print(imagesMedia.length);
         }
-      });
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -53,19 +49,19 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
     } else {
       List<Medium> toRemove = [];
       List<Medium> toAdd = [];
-      selectedImages.forEach((image) {
+      for (var image in selectedImages) {
         if (image.title!.trim() == imagesMedia[index].title!.trim()) {
           toRemove.add(imagesMedia[index]);
         } else {
           toAdd.add(imagesMedia[index]);
           physical_status_selected.add(imagesMedia[index].id);
         }
-      });
+      }
       selectedImages.addAll(toAdd);
       selectedImages.removeWhere((e) => toRemove.contains(e));
-      toRemove.forEach((element) {
+      for (var element in toRemove) {
         physical_status_selected.remove(element.id);
-      });
+      }
     }
     setState(() {});
   }
@@ -103,9 +99,9 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
     } else {
       setState(() {
         selectedImages = widget.images;
-        widget.images.forEach((element) {
+        for (var element in widget.images) {
           physical_status_selected.add(element.id);
-        });
+        }
       });
     }
   }
@@ -116,7 +112,7 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
 
   clickDeleteButton() async {
     List<Medium> toRemove = [];
-    selectedImages.forEach((element) async {
+    for (var element in selectedImages){
       try {
         final file = await element.getFile();
         print(file);
@@ -125,8 +121,8 @@ class _CameraViewScreenState extends State<CameraViewScreen> {
       } catch (e) {
         print(e);
       }
-    });
-    Future.delayed(Duration(seconds: 1)).then((v) async {
+    }
+    Future.delayed(const Duration(seconds: 1)).then((v) async {
       selectedImages.removeWhere((e) => toRemove.contains(e));
 
       await getImage();

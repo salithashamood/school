@@ -98,32 +98,32 @@ class _MapTextFieldState extends State<MapTextField> {
             decoration: BoxDecoration(
                 border: Border(
                     left: BorderSide(
-                        color: widget.borderColor ?? Color(0XFF70707059)))),
+                        color: widget.borderColor ?? const Color(0xff70707059)))),
             child: Icon(
               widget.icon,
-              color: widget.iconColor ?? Color(0XFF70707059),
+              color: widget.iconColor ?? const Color(0xff70707059),
             ),
           ),
         ),
-        fillColor: widget.filledColor ?? Color(0XFFE8EEF3),
+        fillColor: widget.filledColor ?? const Color(0XFFE8EEF3),
         filled: widget.filled ?? true,
         border: OutlineInputBorder(
           borderSide:
-              BorderSide(color: widget.borderColor ?? Color(0XFF70707059)),
+              BorderSide(color: widget.borderColor ?? const Color(0xff70707059)),
           borderRadius: BorderRadius.circular(widget.borderRadius ?? 7),
         ),
         hintText: widget.hintText,
         hintStyle: TextStyle(
-            color: widget.hintTextColor ?? Color(0XFF6D6D6D),
+            color: widget.hintTextColor ?? const Color(0XFF6D6D6D),
             fontSize: widget.hintTextSize ?? 14),
         focusedBorder: OutlineInputBorder(
           borderSide:
-              BorderSide(color: widget.borderColor ?? Color(0XFF70707059)),
+              BorderSide(color: widget.borderColor ?? const Color(0xff70707059)),
           borderRadius: BorderRadius.circular(widget.borderRadius ?? 7),
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide:
-              BorderSide(color: widget.borderColor ?? Color(0XFF70707059)),
+              BorderSide(color: widget.borderColor ?? const Color(0xff70707059)),
           borderRadius: BorderRadius.circular(widget.borderRadius ?? 7),
         ),
       ),

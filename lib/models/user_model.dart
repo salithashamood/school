@@ -8,9 +8,9 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['jwtToken'] = this.jwtToken;
-    data['refreshToken'] = this.refreshToken;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['jwtToken'] = jwtToken;
+    data['refreshToken'] = refreshToken;
     return data;
   }
 }

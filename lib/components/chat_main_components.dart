@@ -76,13 +76,13 @@ chatTile() {
                       CircleAvatar(
                         backgroundColor: Colors.black,
                         radius: 5.h,
-                        child: Icon(
+                        child: const Icon(
                           Icons.person_outline,
                           size: 50,
                         ),
                       ),
                       user['isOnline']
-                          ? Positioned(
+                          ? const Positioned(
                               child: CircleAvatar(radius: 6),
                               top: 5,
                               right: 5,
@@ -117,7 +117,7 @@ chatTile() {
                             ),
                             SizedBox(
                                 width: 15.w,
-                                child: Text(
+                                child: const Text(
                                   '2min ago',
                                   style: TextStyle(color: Colors.grey),
                                 )),

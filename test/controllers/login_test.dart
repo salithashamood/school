@@ -3,13 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:school/binding.dart';
 import 'package:school/components/mobile_login_page.dart';
-import 'package:school/components/tablet_login_page.dart';
 import 'package:school/controllers/login_controller.dart';
-import 'package:school/main.dart';
-import 'package:school/screens/login_page.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -42,7 +37,7 @@ void main() {
       final passwordError = find.text('Password can\'t be empty');
     testWidgets('Empty user name field and password field',
         (WidgetTester tester) async {
-      await tester.pumpWidget(testtedWidget(MobileLoginPage()));
+      await tester.pumpWidget(testtedWidget(const MobileLoginPage()));
       // await tester.pumpWidget(testtedWidget(TabletLoginPage()));  //width: 600
 
       await tester.ensureVisible(tapButton);
@@ -57,7 +52,7 @@ void main() {
 
     testWidgets('Non-Empty user name field and password field',
         (WidgetTester tester) async {
-      await tester.pumpWidget(testtedWidget(MobileLoginPage()));
+      await tester.pumpWidget(testtedWidget(const MobileLoginPage()));
       // await tester.pumpWidget(testtedWidget(TabletLoginPage()));  //width: 600
 
       await tester.enterText(userNameFeild, 'superadmin@assethub.com.au');

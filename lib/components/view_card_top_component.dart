@@ -8,7 +8,6 @@ import 'package:school/main.dart';
 import 'package:school/screens/qr_view_screen.dart';
 import 'package:school/screens/view_previous_inspection._screen.dart';
 import 'package:sizer/sizer.dart';
-import '../screens/google_map_screen.dart';
 import '../utils/colors.dart';
 import '../utils/image.dart';
 
@@ -75,7 +74,7 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
   gotoQR() async {
     bool isPermissioned = await permissionCamera();
     if (isPermissioned) {
-      Get.to(QRVIewScreen());
+      Get.to(const QRVIewScreen());
     } else {
       Get.snackbar(
           'Request Permission', 'Can\'t move camera without permission');
@@ -92,7 +91,7 @@ class _ViewCardTopComponentState extends State<ViewCardTopComponent> {
   }
 
   clickViewPreviousInspection() {
-    Get.to(ViewPreviousInspection());
+    Get.to(const ViewPreviousInspection());
   }
 
   @override

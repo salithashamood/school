@@ -4,11 +4,9 @@ import 'package:school/components/appbar_component.dart';
 import 'package:school/components/appbar_tab_component.dart';
 import 'package:school/components/drawer_component.dart';
 import 'package:school/components/home_components.dart';
-import 'package:school/utils/image.dart';
 import 'package:school/utils/user_secure_storage.dart';
 import 'package:sizer/sizer.dart';
 
-import '../utils/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

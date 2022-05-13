@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:map_with_location/map_with_location.dart';
 import 'package:photo_gallery/photo_gallery.dart';
 import 'package:rounded_text_field/rounded_text_field.dart';
 import 'package:school/controllers/filter_controller.dart';
 import 'package:school/main.dart';
-import 'package:school/screens/google_map_screen.dart';
 import 'package:sizer/sizer.dart';
 import '../utils/colors.dart';
 import '../utils/image.dart';
@@ -38,7 +36,7 @@ tabBar(TabController tabController) {
   return DefaultTabController(
     length: 2,
     initialIndex: 0,
-    animationDuration: Duration(milliseconds: 500),
+    animationDuration: const Duration(milliseconds: 500),
     child: SizedBox(
       width: 44.w,
       child: TabBar(
@@ -48,7 +46,7 @@ tabBar(TabController tabController) {
         indicatorSize: TabBarIndicatorSize.label,
         indicatorWeight: 3,
         labelColor: primaryColor,
-        unselectedLabelColor: Color(0XFF1F347B),
+        unselectedLabelColor: const Color(0XFF1F347B),
         unselectedLabelStyle: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -78,7 +76,7 @@ rightActionIcon(
                       backgroundColor: orangeColor,
                       child: Text(
                         images.length.toString(),
-                        style: TextStyle(fontSize: 9, color: Colors.white),
+                        style: const TextStyle(fontSize: 9, color: Colors.white),
                       ),
                       radius: 8,
                     ),
@@ -142,7 +140,7 @@ bottomRightNumberContainer() {
     child: Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(4)),
-        color: Color(0XFFEEF2F5).withOpacity(0.75),
+        color: const Color(0XFFEEF2F5).withOpacity(0.75),
       ),
       height: 6.h,
       width: 40.w,
@@ -192,8 +190,8 @@ bottomLeftContainer() {
     padding: const EdgeInsets.only(top: 15),
     child: Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        color: Color(0XFFDEEFFF).withOpacity(0.51),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        color: const Color(0XFFDEEFFF).withOpacity(0.51),
       ),
       height: 6.h,
       width: 40.w,
@@ -236,7 +234,7 @@ viewCardListView() {
   return ListView.builder(
     shrinkWrap: true,
     itemCount: listData.length,
-    physics: NeverScrollableScrollPhysics(),
+    physics: const NeverScrollableScrollPhysics(),
     itemBuilder: (context, index) {
       return Padding(
         padding: const EdgeInsets.only(top: 10),
@@ -250,7 +248,7 @@ viewCardListView() {
           child: ListTile(
             title: Text(
               listData[index],
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
@@ -266,7 +264,7 @@ viewCardListView() {
                       SizedBox(
                         width: 2.w,
                       ),
-                      Text(
+                      const Text(
                         'In Progress',
                         style: TextStyle(
                           fontSize: 12,
@@ -290,7 +288,7 @@ viewCardListView() {
                             SizedBox(
                               width: 2.w,
                             ),
-                            Text(
+                            const Text(
                               'In Progress',
                               style: TextStyle(
                                 fontSize: 12,
@@ -405,7 +403,7 @@ expandedDetails(
           children: [
             descriptionField(),
             sizedBox(2.h),
-            RoundedTextField(hintText: 'Additional Comments'),
+            const RoundedTextField(hintText: 'Additional Comments'),
             // additionalCommentsField(),
             sizedBox(2.h),
             rfidField(gotoQR),
@@ -422,7 +420,7 @@ expandedDetails(
             sizedBox(3.h),
             maintenanceDetailsText(),
             sizedBox(2.h),
-            RoundedTextField(hintText: 'Work'),
+            const RoundedTextField(hintText: 'Work'),
             // workField(),
             sizedBox(2.h),
             dradeField(),
@@ -449,7 +447,7 @@ defectsSwitcheVisibilityWidget(bool isSwitched) {
     child: Column(
       children: [
         sizedBox(1.h),
-        RoundedTextField(hintText: 'Work'),
+        const RoundedTextField(hintText: 'Work'),
         // workField(),
         sizedBox(2.h),
         dradeField(),
@@ -536,7 +534,7 @@ dradeField() {
       Expanded(
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(7)),
+            borderRadius: const BorderRadius.all(Radius.circular(7)),
             color: lightGreyColor,
           ),
           child: Padding(
@@ -650,7 +648,7 @@ bottomButton(String text, Color color, bool isExpanded) {
     ),
     child: Text(
       text,
-      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -690,22 +688,22 @@ bottomComponents(
         numberWidget(),
         sizedBox(3.h),
         bottomRow(Icons.replay_circle_filled, 'View Previous Inspection',
-            Color(0XFF4A4A4A), clickViewPreviousInspection),
-        Divider(
+            const Color(0XFF4A4A4A), clickViewPreviousInspection),
+        const Divider(
           thickness: 1,
         ),
         bottomRow(
-            Icons.location_on_outlined, 'Location', Color(0XFF4A4A4A), () {}),
-        Divider(
+            Icons.location_on_outlined, 'Location', const Color(0XFF4A4A4A), () {}),
+        const Divider(
           thickness: 1,
         ),
-        bottomRow(Icons.copy, 'Save as template', Color(0XFF4A4A4A), () {}),
-        Divider(
+        bottomRow(Icons.copy, 'Save as template', const Color(0XFF4A4A4A), () {}),
+        const Divider(
           thickness: 1,
         ),
         bottomRow(Icons.announcement_outlined, 'View Details',
-            Color(0XFF4A4A4A), () {}),
-        Divider(
+            const Color(0XFF4A4A4A), () {}),
+        const Divider(
           thickness: 1,
         ),
         bottomRow(Icons.delete, 'Delete', Colors.red, () {}),
@@ -739,7 +737,7 @@ bottomRow(IconData icon, String text, Color color, VoidCallback onTap) {
 appBarAction(VoidCallback tapFilter) {
   return [
     IconButton(onPressed: tapFilter, icon: Image.asset(drawerImage)),
-    IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+    IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
   ];
 }
 
@@ -749,8 +747,8 @@ actionBottomContainer(String text) {
     child: Container(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(21)),
-        color: Color(0XFFC8C8C8).withOpacity(0.48),
+        borderRadius: const BorderRadius.all(Radius.circular(21)),
+        color: const Color(0XFFC8C8C8).withOpacity(0.48),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -758,7 +756,7 @@ actionBottomContainer(String text) {
           Icon(
             Icons.done,
             size: 14,
-            color: Color(0XFF2C3E50).withOpacity(0.19),
+            color: const Color(0XFF2C3E50).withOpacity(0.19),
           ),
           SizedBox(
             width: 1.w,
@@ -766,7 +764,7 @@ actionBottomContainer(String text) {
           Text(
             text,
             style: TextStyle(
-              color: Color(0XFF0F0F0F).withOpacity(0.51),
+              color: const Color(0XFF0F0F0F).withOpacity(0.51),
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),
@@ -779,7 +777,7 @@ actionBottomContainer(String text) {
 
 bottomDropDownIcon(List dropDownList) {
   return Container(
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(6)),
       color: Color(0XFFEBEBEB),
     ),
@@ -800,11 +798,11 @@ bottomDropDownIcon(List dropDownList) {
         isExpanded: true,
         // isDense: true,
         // value: select,
-        hint: Text(
+        hint: const Text(
           'Windows',
           style: TextStyle(color: Color(0XFF00295E), fontSize: 14),
         ),
-        style: TextStyle(color: Color(0XFF00295E), fontSize: 14),
+        style: const TextStyle(color: Color(0XFF00295E), fontSize: 14),
       ),
     ),
   );
@@ -823,7 +821,7 @@ bottomActionButton(String text, Color color) {
     ),
     child: Text(
       text,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
     ),
   );
 }
@@ -832,7 +830,7 @@ typeConTainer(String text) {
   return Container(
     width: 20.w,
     padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(21)),
       color: Color(0XFF505050),
     ),
@@ -842,13 +840,13 @@ typeConTainer(String text) {
       children: [
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
         ),
-        Icon(
+        const Icon(
           Icons.close,
           size: 18,
           color: Colors.white,
@@ -886,12 +884,12 @@ actionBottomComponent(Function setsState, FilterController controller) {
                     padding:
                         const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(21)),
+                      borderRadius: const BorderRadius.all(Radius.circular(21)),
                       color: (controller.selectList.isNotEmpty &&
                               controller.selectList
                                   .contains(controller.statusList[index]))
-                          ? Color(0XFF505050)
-                          : Color(0XFFC8C8C8).withOpacity(0.48),
+                          ? const Color(0XFF505050)
+                          : const Color(0XFFC8C8C8).withOpacity(0.48),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -903,7 +901,7 @@ actionBottomComponent(Function setsState, FilterController controller) {
                                   controller.selectList
                                       .contains(controller.statusList[index]))
                               ? Colors.white
-                              : Color(0XFF2C3E50).withOpacity(0.19),
+                              : const Color(0XFF2C3E50).withOpacity(0.19),
                         ),
                         SizedBox(
                           width: 1.w,
@@ -915,7 +913,7 @@ actionBottomComponent(Function setsState, FilterController controller) {
                                     controller.selectList
                                         .contains(controller.statusList[index]))
                                 ? Colors.white
-                                : Color(0XFF0F0F0F).withOpacity(0.51),
+                                : const Color(0XFF0F0F0F).withOpacity(0.51),
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),
@@ -966,7 +964,7 @@ actionBottomComponent(Function setsState, FilterController controller) {
 bottomTitle(String text) {
   return Text(
     text,
-    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
   );
 }
 
@@ -1051,7 +1049,7 @@ tableteCardUI(
                 ),
                 VerticalDivider(
                   thickness: 1.5,
-                  color: Color(0XFF707070).withOpacity(0.2),
+                  color: const Color(0XFF707070).withOpacity(0.2),
                 ),
                 IntrinsicWidth(
                   child: SizedBox(
@@ -1134,7 +1132,7 @@ tabletImage(String name, Color color, String icon) {
   return Stack(
     alignment: Alignment.bottomCenter,
     children: [
-      Container(
+      SizedBox(
         height: 5.5.h,
         width: 5.5.h,
         child: Image.asset(
@@ -1159,8 +1157,8 @@ tabletBottomLeft() {
     padding: const EdgeInsets.only(top: 15),
     child: Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        color: Color(0XFFDEEFFF).withOpacity(0.51),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        color: const Color(0XFFDEEFFF).withOpacity(0.51),
       ),
       height: 6.h,
       width: 23.w,
@@ -1197,7 +1195,7 @@ tabletBottomRight() {
     child: Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(4)),
-        color: Color(0XFFEEF2F5).withOpacity(0.75),
+        color: const Color(0XFFEEF2F5).withOpacity(0.75),
       ),
       height: 6.h,
       width: 19.w,

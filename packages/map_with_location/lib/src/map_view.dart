@@ -36,9 +36,9 @@ class MapViewScreen extends StatefulWidget {
 class _MapViewScreenState extends State<MapViewScreen> {
   double? latitude;
   double? longitude;
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   List<Marker> _marker = [];
-  Set<Circle> circles = Set();
+  Set<Circle> circles = {};
   bool isSelected = false;
   bool isCanEdit = false;
   bool isSavePosition = false;
@@ -82,7 +82,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
           Marker(
             markerId: MarkerId(widget.currentPosition.toString()),
             position: widget.currentPosition!,
-            infoWindow: InfoWindow(title: 'Select Location'),
+            infoWindow: const InfoWindow(title: 'Select Location'),
           ),
         );
       });
@@ -100,7 +100,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
         Marker(
           markerId: MarkerId(tappedPont.toString()),
           position: tappedPont,
-          infoWindow: InfoWindow(title: 'Select Location'),
+          infoWindow: const InfoWindow(title: 'Select Location'),
         ),
       );
     });
@@ -120,16 +120,16 @@ class _MapViewScreenState extends State<MapViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shadowColor: widget.appBarhadowColor ?? Color(0XFF70707059),
+        shadowColor: widget.appBarhadowColor ?? const Color(0xff70707059),
         elevation: widget.appBarElavation ?? 5,
         shape: appBarShape(),
         toolbarHeight: widget.appBarToolBarHeight,
-        backgroundColor: widget.appBarColor ?? Color(0XFF274BFF),
+        backgroundColor: widget.appBarColor ?? const Color(0XFF274BFF),
         centerTitle: widget.isCenterTitle ?? true,
         title: Text(widget.appBarTitle),
         leading: IconButton(
           onPressed: tapBackButton,
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: _location != null
@@ -154,8 +154,8 @@ class _MapViewScreenState extends State<MapViewScreen> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 7, horizontal: 19),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(18)),
-                        color: Color(0XFF010101).withOpacity(0.48)),
+                        borderRadius: const BorderRadius.all(Radius.circular(18)),
+                        color: const Color(0XFF010101).withOpacity(0.48)),
                     child: isSavePosition
                         ? isSelected
                             ? buttonItem('Done', false)
@@ -169,15 +169,15 @@ class _MapViewScreenState extends State<MapViewScreen> {
                 ),
               ],
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );
   }
 
   textWidget() {
-    return Text('Select Position',
-        style: const TextStyle(
+    return const Text('Select Position',
+        style: TextStyle(
             fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white));
   }
 
@@ -207,7 +207,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
                   size: 18,
                   color: Colors.white,
                 ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Text(

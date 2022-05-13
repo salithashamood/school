@@ -152,7 +152,7 @@ appBarTabView(String text) {
 tabBarViewColumn(String text) {
   return InkWell(
     onTap: () {
-      Get.to(ViewCardScreen());
+      Get.to(const ViewCardScreen());
     },
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

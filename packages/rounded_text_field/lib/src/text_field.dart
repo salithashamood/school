@@ -19,20 +19,20 @@ class _RoundedTextFieldState extends State<RoundedTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        fillColor: widget.fillColor ?? Color(0XFFE8EEF3),
+        fillColor: widget.fillColor ?? const Color(0XFFE8EEF3),
         filled: widget.filled ?? true,
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: widget.borderColor ?? Color(0XFF70707059)),
+          borderSide: BorderSide(color: widget.borderColor ?? const Color(0xff70707059)),
           borderRadius: BorderRadius.circular(widget.radius ?? 7),
         ),
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: widget.hintTextColor ?? Color(0XFF6D6D6D), fontSize: widget.hintTextSize ?? 14),
+        hintStyle: TextStyle(color: widget.hintTextColor ?? const Color(0XFF6D6D6D), fontSize: widget.hintTextSize ?? 14),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: widget.borderColor ?? Color(0XFF70707059)),
+          borderSide: BorderSide(color: widget.borderColor ?? const Color(0xff70707059)),
           borderRadius: BorderRadius.circular(widget.radius ?? 7),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: widget.borderColor ?? Color(0XFF70707059)),
+          borderSide: BorderSide(color: widget.borderColor ?? const Color(0xff70707059)),
           borderRadius: BorderRadius.circular(widget.radius ?? 7),
         ),
       ),

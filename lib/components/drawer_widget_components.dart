@@ -79,7 +79,7 @@ accountDetails(String fName, String lName) {
                       children: [
                         Text(
                           fName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 25,
                           ),
@@ -90,7 +90,7 @@ accountDetails(String fName, String lName) {
                         Expanded(
                           child: Text(
                             lName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 25,
                             ),
                             overflow: TextOverflow.ellipsis,
@@ -138,7 +138,7 @@ accountDetails(String fName, String lName) {
               Container(
                 child: CircleAvatar(
                   radius: 5.h,
-                  child: Icon(
+                  child: const Icon(
                     Icons.person,
                     size: 50,
                   ),
@@ -202,14 +202,14 @@ boxListView(color) {
       height: 75.h,
       color: color,
       child: ListView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: sampleData.map((e) {
           return Row(
             children: [
               Expanded(
                   child: Text(
                 e,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               )),
               IconButton(onPressed: () {}, icon: Image.asset(arrowRight)),
             ],
