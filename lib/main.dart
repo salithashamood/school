@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
             fontFamily: 'segoeui',
             primarySwatch: Colors.blue,
           ),
-          home: const LoginPage(),
-          // home: const SetScreen(),
+          // home: const LoginPage(),
+          home: const SetScreen(),
         );
       },
     );
